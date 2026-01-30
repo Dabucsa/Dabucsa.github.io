@@ -4,51 +4,130 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 
-const schedule = {
-  Lunes: [
-    { time: "10:30 - 12:00", discipline: "Boxeo", color: "#d4af37" },
-    { time: "17:00 - 18:00", discipline: "Funcional", color: "#16a34a" },
-    { time: "18:00 - 19:00", discipline: "Kickboxing", color: "#0891b2" },
-    { time: "19:00 - 20:30", discipline: "BJJ", color: "#dc2626" },
-    { time: "20:30 - 22:00", discipline: "MMA", color: "#ea580c" },
-  ],
-  Martes: [
-    { time: "17:00 - 18:00", discipline: "Funcional", color: "#16a34a" },
-    { time: "18:00 - 19:00", discipline: "Kickboxing", color: "#0891b2" },
-    { time: "19:00 - 20:30", discipline: "No-Gi", color: "#7c3aed" },
-    { time: "20:30 - 22:00", discipline: "Sparring Libre", color: "#ef4444" },
-  ],
-  Miercoles: [
-    { time: "10:30 - 12:00", discipline: "Boxeo", color: "#d4af37" },
-    { time: "17:00 - 18:00", discipline: "Funcional", color: "#16a34a" },
-    { time: "18:00 - 19:00", discipline: "Kickboxing", color: "#0891b2" },
-    { time: "19:00 - 20:30", discipline: "BJJ", color: "#dc2626" },
-    { time: "20:30 - 22:00", discipline: "MMA", color: "#ea580c" },
-  ],
-  Jueves: [
-    { time: "17:00 - 18:00", discipline: "Funcional", color: "#16a34a" },
-    { time: "18:00 - 19:00", discipline: "Kickboxing", color: "#0891b2" },
-    { time: "19:00 - 20:30", discipline: "No-Gi", color: "#7c3aed" },
-    { time: "20:30 - 22:00", discipline: "Sparring Libre", color: "#ef4444" },
-  ],
-  Viernes: [
-    { time: "10:30 - 12:00", discipline: "Boxeo", color: "#d4af37" },
-    { time: "17:00 - 18:00", discipline: "Funcional", color: "#16a34a" },
-    { time: "18:00 - 19:30", discipline: "BJJ", color: "#dc2626" },
-    { time: "19:30 - 21:00", discipline: "Open Mat", color: "#6b7280" },
-  ],
-};
-
-const days = ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes"] as const;
+// Horarios organizados por tiempo
+const schedule = [
+  { 
+    time: "09:00",
+    lun: null,
+    mar: { name: "Entrenamiento Funcional", color: "#d4a843" },
+    mie: null,
+    jue: { name: "Entrenamiento Funcional", color: "#d4a843" },
+    vie: null
+  },
+  { 
+    time: "10:00",
+    lun: { name: "Funcional - Kickboxing", color: "#d4a843" },
+    mar: null,
+    mie: { name: "Funcional - Kickboxing", color: "#d4a843" },
+    jue: null,
+    vie: { name: "Funcional - Kickboxing", color: "#d4a843" }
+  },
+  { 
+    time: "10:30",
+    lun: null,
+    mar: { name: "BJJ - MMA Kids", color: "#d4a843" },
+    mie: null,
+    jue: { name: "BJJ - MMA Kids", color: "#d4a843" },
+    vie: null
+  },
+  { 
+    time: "11:00",
+    lun: { name: "Kickboxing - Boxeo", color: "#c44a2e" },
+    mar: null,
+    mie: { name: "Kickboxing - Boxeo", color: "#c44a2e" },
+    jue: null,
+    vie: { name: "Kickboxing - Boxeo", color: "#c44a2e" }
+  },
+  { 
+    time: "11:30",
+    lun: null,
+    mar: { name: "BJJ Principiantes", color: "#d4a843" },
+    mie: null,
+    jue: { name: "BJJ Principiantes", color: "#d4a843" },
+    vie: null
+  },
+  { 
+    time: "12:00",
+    lun: { name: "MMA", color: "#c44a2e" },
+    mar: null,
+    mie: { name: "MMA", color: "#c44a2e" },
+    jue: null,
+    vie: { name: "MMA", color: "#c44a2e" }
+  },
+  { 
+    time: "12:30",
+    lun: { name: "Competidores", color: "#d4a843" },
+    mar: null,
+    mie: { name: "Competidores", color: "#d4a843" },
+    jue: null,
+    vie: { name: "Competidores", color: "#d4a843" }
+  },
+  { 
+    time: "16:00",
+    lun: { name: "Boxeo", color: "#c44a2e" },
+    mar: null,
+    mie: { name: "Boxeo", color: "#c44a2e" },
+    jue: null,
+    vie: { name: "Boxeo", color: "#c44a2e" }
+  },
+  { 
+    time: "17:00",
+    lun: { name: "MMA", color: "#c44a2e" },
+    mar: null,
+    mie: { name: "MMA", color: "#c44a2e" },
+    jue: null,
+    vie: { name: "MMA", color: "#c44a2e" }
+  },
+  { 
+    time: "18:00",
+    lun: { name: "Kickboxing", color: "#d4a843" },
+    mar: { name: "MMA", color: "#c44a2e" },
+    mie: { name: "Kickboxing", color: "#d4a843" },
+    jue: { name: "MMA", color: "#c44a2e" },
+    vie: { name: "Kickboxing", color: "#d4a843" }
+  },
+  { 
+    time: "19:00",
+    lun: { name: "Kickboxing - Boxeo", color: "#c44a2e" },
+    mar: { name: "BJJ Femenino", color: "#d4a843" },
+    mie: { name: "Kickboxing - Boxeo", color: "#c44a2e" },
+    jue: { name: "BJJ Femenino", color: "#d4a843" },
+    vie: { name: "Kickboxing - Boxeo", color: "#c44a2e" }
+  },
+  { 
+    time: "20:00",
+    lun: { name: "Boxeo", color: "#c44a2e" },
+    mar: null,
+    mie: { name: "Boxeo", color: "#c44a2e" },
+    jue: null,
+    vie: { name: "Boxeo", color: "#c44a2e" }
+  },
+  { 
+    time: "20:10",
+    lun: null,
+    mar: { name: "BJJ Grupo General", color: "#d4a843" },
+    mie: null,
+    jue: { name: "BJJ Grupo General", color: "#d4a843" },
+    vie: null
+  },
+  { 
+    time: "20:15",
+    lun: { name: "BJJ - MMA", color: "#d4a843" },
+    mar: null,
+    mie: { name: "BJJ - MMA", color: "#d4a843" },
+    jue: null,
+    vie: { name: "BJJ - MMA", color: "#d4a843" }
+  },
+];
 
 export default function HorariosPage() {
   return (
-    <div className="min-h-screen bg-[#0a0a0a] pt-24">
+    <div className="min-h-screen bg-[#0c0a08] pt-24">
       {/* Header */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <Link
           href="/"
-          className="inline-flex items-center gap-2 text-gray-400 hover:text-[#dc2626] transition-colors mb-8"
+          className="inline-flex items-center gap-2 text-[#8a7a62] hover:text-[#d4a843] transition-colors mb-8"
         >
           <ArrowLeft size={18} />
           <span>Volver al inicio</span>
@@ -59,147 +138,166 @@ export default function HorariosPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <span className="text-[#dc2626] text-sm font-bold uppercase tracking-widest">
-            Horarios de Clases
-          </span>
-          <h1 className="mt-4 text-4xl sm:text-5xl font-black text-white tracking-tight">
+          <div className="jp-line justify-start mb-4">
+            <span className="text-[#8a7a62] text-xs tracking-[0.3em] uppercase">
+              Horarios de Clases
+            </span>
+          </div>
+          <h1 className="text-4xl sm:text-5xl font-black text-[#f5f0e8] tracking-tight">
             ENTRENA <span className="gradient-text">CUANDO QUIERAS</span>
           </h1>
           <div className="accent-line mt-6" />
-          <p className="mt-6 text-gray-400 max-w-2xl">
-            Ofrecemos multiples horarios para que puedas entrenar sin importar
-            tu agenda. Todas las clases estan abiertas para todos los niveles,
-            salvo indicacion especifica.
+          <p className="mt-6 text-[#8a7a62] max-w-2xl">
+            Horario de verano. Multiples bloques de lunes a viernes para que
+            entrenes sin importar tu agenda.
           </p>
         </motion.div>
       </div>
 
-      {/* Schedule Grid */}
+      {/* Schedule Table */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-24">
-        {/* Legend */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="flex flex-wrap gap-4 mb-8"
-        >
-          {[
-            { name: "BJJ", color: "#dc2626" },
-            { name: "No-Gi", color: "#7c3aed" },
-            { name: "MMA", color: "#ea580c" },
-            { name: "Kickboxing", color: "#0891b2" },
-            { name: "Boxeo", color: "#d4af37" },
-            { name: "Funcional", color: "#16a34a" },
-          ].map((item) => (
-            <div key={item.name} className="flex items-center gap-2">
-              <span
-                className="w-3 h-3 rounded-full"
-                style={{ backgroundColor: item.color }}
-              />
-              <span className="text-sm text-gray-400">{item.name}</span>
-            </div>
-          ))}
-        </motion.div>
-
-        {/* Desktop Schedule Table */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          className="hidden lg:block"
+          transition={{ duration: 0.5 }}
+          className="bg-[#161210] border border-[#2a2318] rounded-2xl overflow-hidden"
         >
-          <div className="bg-[#141414] border border-[#262626] rounded-2xl overflow-hidden">
-            <div className="grid grid-cols-5">
-              {/* Header */}
-              {days.map((day) => (
-                <div
-                  key={day}
-                  className="p-4 bg-[#1a1a1a] border-b border-[#262626] text-center"
-                >
-                  <span className="text-white font-bold uppercase tracking-wider">
-                    {day}
-                  </span>
-                </div>
-              ))}
+          {/* Header */}
+          <div className="p-5 bg-[#1a1510] border-b border-[#2a2318]">
+            <h2 className="text-2xl font-black text-[#f5f0e8] uppercase tracking-wider text-center">
+              Horarios Semanales
+            </h2>
+            <p className="text-[#8a7a62] text-xs text-center mt-2">
+              (Horario de Verano)
+            </p>
+          </div>
 
-              {/* Content */}
-              {days.map((day) => (
-                <div key={day} className="p-4 border-r border-[#262626] last:border-r-0">
-                  <div className="space-y-3">
-                    {schedule[day].map((item, index) => (
-                      <div
-                        key={index}
-                        className="p-3 rounded-lg border border-[#262626] hover:border-[#dc2626]/30 transition-colors"
-                        style={{
-                          borderLeftWidth: "4px",
-                          borderLeftColor: item.color,
-                        }}
-                      >
-                        <div className="text-xs text-gray-500 mb-1">
-                          {item.time}
-                        </div>
-                        <div className="text-sm font-semibold text-white">
-                          {item.discipline}
-                        </div>
-                      </div>
+          {/* Desktop Table */}
+          <div className="hidden md:block overflow-x-auto">
+            <table className="w-full">
+              <thead>
+                <tr className="border-b border-[#2a2318]">
+                  <th className="p-4 text-left text-[#8a7a62] font-bold text-sm uppercase tracking-wider bg-[#0c0a08]">
+                    Hora
+                  </th>
+                  <th className="p-4 text-center text-[#d4a843] font-bold text-sm uppercase tracking-wider bg-[#0c0a08]">
+                    Lunes
+                  </th>
+                  <th className="p-4 text-center text-[#d4a843] font-bold text-sm uppercase tracking-wider bg-[#0c0a08]">
+                    Martes
+                  </th>
+                  <th className="p-4 text-center text-[#d4a843] font-bold text-sm uppercase tracking-wider bg-[#0c0a08]">
+                    Miércoles
+                  </th>
+                  <th className="p-4 text-center text-[#d4a843] font-bold text-sm uppercase tracking-wider bg-[#0c0a08]">
+                    Jueves
+                  </th>
+                  <th className="p-4 text-center text-[#d4a843] font-bold text-sm uppercase tracking-wider bg-[#0c0a08]">
+                    Viernes
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {schedule.map((row, index) => (
+                  <motion.tr
+                    key={index}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: index * 0.03 }}
+                    className="border-b border-[#2a2318] hover:bg-[#0c0a08]/50 transition-colors"
+                  >
+                    <td className="p-3 text-[#d4a843] font-bold text-sm">
+                      {row.time}
+                    </td>
+                    {['lun', 'mar', 'mie', 'jue', 'vie'].map((day) => (
+                      <td key={day} className="p-2">
+                        {row[day] ? (
+                          <div
+                            className="rounded-lg p-3 text-center text-[#f5f0e8] text-xs font-medium border border-[#2a2318] hover:border-[#d4a843]/30 transition-colors"
+                            style={{ 
+                              backgroundColor: row[day].color + '15',
+                              borderLeftWidth: '3px',
+                              borderLeftColor: row[day].color
+                            }}
+                          >
+                            {row[day].name}
+                          </div>
+                        ) : (
+                          <div className="text-center text-[#2a2318] text-xs">—</div>
+                        )}
+                      </td>
                     ))}
+                  </motion.tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {/* Mobile View */}
+          <div className="md:hidden p-4 space-y-4">
+            {schedule.map((row, index) => {
+              const hasClasses = ['lun', 'mar', 'mie', 'jue', 'vie'].some(day => row[day]);
+              if (!hasClasses) return null;
+              
+              return (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.05 }}
+                  className="bg-[#0c0a08] border border-[#2a2318] rounded-xl p-4"
+                >
+                  <div className="text-[#d4a843] font-bold text-base mb-3">
+                    {row.time}
                   </div>
-                </div>
-              ))}
-            </div>
+                  <div className="space-y-2">
+                    {['lun', 'mar', 'mie', 'jue', 'vie'].map((day) => {
+                      if (!row[day]) return null;
+                      const dayNames = { lun: 'Lun', mar: 'Mar', mie: 'Mié', jue: 'Jue', vie: 'Vie' };
+                      return (
+                        <div
+                          key={day}
+                          className="flex items-center gap-3 rounded-lg p-2.5 border border-[#2a2318]"
+                          style={{ 
+                            backgroundColor: row[day].color + '15',
+                            borderLeftWidth: '3px',
+                            borderLeftColor: row[day].color
+                          }}
+                        >
+                          <span className="text-[#8a7a62] text-xs font-bold w-8">
+                            {dayNames[day]}
+                          </span>
+                          <span className="text-[#f5f0e8] text-sm">
+                            {row[day].name}
+                          </span>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </motion.div>
+              );
+            })}
           </div>
         </motion.div>
 
-        {/* Mobile Schedule Cards */}
-        <div className="lg:hidden space-y-6">
-          {days.map((day, dayIndex) => (
-            <motion.div
-              key={day}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: dayIndex * 0.1 }}
-              className="bg-[#141414] border border-[#262626] rounded-xl overflow-hidden"
-            >
-              <div className="p-4 bg-[#1a1a1a] border-b border-[#262626]">
-                <span className="text-white font-bold uppercase tracking-wider">
-                  {day}
-                </span>
-              </div>
-              <div className="p-4 space-y-3">
-                {schedule[day].map((item, index) => (
-                  <div
-                    key={index}
-                    className="flex items-center gap-4 p-3 rounded-lg bg-[#0a0a0a] border border-[#262626]"
-                  >
-                    <div
-                      className="w-1 h-12 rounded-full"
-                      style={{ backgroundColor: item.color }}
-                    />
-                    <div>
-                      <div className="text-xs text-gray-500">{item.time}</div>
-                      <div className="text-sm font-semibold text-white">
-                        {item.discipline}
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </motion.div>
-          ))}
-        </div>
-
         {/* Note */}
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.8 }}
-          className="mt-12 p-6 bg-[#141414] border border-[#262626] rounded-xl"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4 }}
+          className="mt-6 p-5 bg-[#161210] border border-[#2a2318] rounded-xl"
         >
-          <h3 className="text-white font-bold mb-2">Nota importante</h3>
-          <p className="text-gray-400 text-sm">
-            Los horarios pueden estar sujetos a cambios. Para informacion
-            actualizada, siguenos en nuestras redes sociales o contactanos
-            directamente. La primera clase es gratuita para nuevos alumnos.
+          <p className="text-[#8a7a62] text-sm text-center">
+            Los horarios pueden variar. Para información actualizada síguenos en{" "}
+            <a
+              href="https://www.instagram.com/dojozenpucon/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[#d4a843] hover:underline"
+            >
+              @dojozenpucon
+            </a>
+            . La primera clase es gratuita.
           </p>
         </motion.div>
 
@@ -207,12 +305,12 @@ export default function HorariosPage() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1 }}
-          className="mt-8 text-center"
+          transition={{ delay: 0.6 }}
+          className="mt-12 text-center"
         >
           <Link
             href="/contacto"
-            className="inline-block px-8 py-4 bg-[#dc2626] hover:bg-[#991b1b] text-white font-bold uppercase tracking-wider rounded-lg transition-all duration-300 hover:shadow-xl hover:shadow-red-500/30"
+            className="inline-block px-8 py-4 btn-gold rounded-lg"
           >
             Reservar Clase Gratis
           </Link>

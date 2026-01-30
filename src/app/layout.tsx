@@ -17,7 +17,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Dojo Zen Pucon | Artes Marciales - BJJ, MMA, Kickboxing, Boxeo",
   description:
-    "Centro de artes marciales en Pucon, Chile. Entrena BJJ, No-Gi, MMA, Kickboxing, Boxeo y Funcional con instructores profesionales.",
+    "Centro de artes marciales en Pucon, Chile. Entrena BJJ, MMA, Kickboxing, Boxeo y Funcional. Clases para todas las edades.",
   keywords: [
     "artes marciales pucon",
     "bjj pucon",
@@ -26,11 +26,13 @@ export const metadata: Metadata = {
     "boxeo pucon",
     "dojo zen",
     "jiu jitsu pucon",
+    "dojo zen pucon",
   ],
   authors: [{ name: "Dojo Zen Pucon" }],
   openGraph: {
     title: "Dojo Zen Pucon | Artes Marciales",
-    description: "Centro de artes marciales en Pucon - BJJ, MMA, Kickboxing, Boxeo",
+    description:
+      "Centro de artes marciales en Pucon - BJJ, MMA, Kickboxing, Boxeo y Funcional",
     type: "website",
     locale: "es_CL",
   },
@@ -44,7 +46,7 @@ export default function RootLayout({
   return (
     <html lang="es">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#0a0a0a] text-white`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#0c0a08] text-[#f5f0e8]`}
       >
         <Header />
         <main>{children}</main>
