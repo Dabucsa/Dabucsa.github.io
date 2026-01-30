@@ -27,7 +27,7 @@ export default function Hero() {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center pt-20">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center pt-28 md:pt-20">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -38,7 +38,7 @@ export default function Hero() {
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.2, duration: 0.8 }}
-            className="mx-auto mb-8 w-32 h-32 md:w-40 md:h-40 animate-float"
+            className="mx-auto mb-8 w-28 h-28 sm:w-32 sm:h-32 md:w-40 md:h-40 animate-float"
           >
             <img 
               src="/images/logo.jpg" 

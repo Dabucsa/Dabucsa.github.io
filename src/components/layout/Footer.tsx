@@ -9,21 +9,11 @@ export default function Footer() {
           {/* Brand */}
           <div>
             <div className="flex items-center gap-3 mb-6">
-              <div className="relative w-10 h-10">
-                <svg viewBox="0 0 100 100" className="w-full h-full" fill="none">
-                  <circle
-                    cx="50" cy="50" r="42"
-                    stroke="url(#ftGrad)" strokeWidth="3"
-                    strokeLinecap="round" strokeDasharray="200 70"
-                  />
-                  <defs>
-                    <linearGradient id="ftGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" stopColor="#a07c2e" />
-                      <stop offset="100%" stopColor="#d4a843" />
-                    </linearGradient>
-                  </defs>
-                </svg>
-              </div>
+              <img 
+                src="/images/logo.jpg" 
+                alt="Dojo Zen Logo" 
+                className="w-12 h-12 object-cover rounded-full border-2 border-[#d4a843]/30"
+              />
               <div className="flex flex-col">
                 <span className="text-lg font-bold tracking-wider">
                   <span className="text-[#d4a843]">DOJO</span>{" "}
@@ -35,8 +25,7 @@ export default function Footer() {
               </div>
             </div>
             <p className="text-[#8a7a62] text-sm leading-relaxed mb-6">
-              Centro de artes marciales en Pucon. BJJ, MMA, Kickboxing, Boxeo y
-              Funcional. Entrena con los mejores.
+              10 años formando guerreros en Pucón. BJJ, MMA, Kickboxing, Boxeo y Funcional. Más de 42 clases semanales con instructores de élite.
             </p>
             <div className="flex gap-3">
               <a

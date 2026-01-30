@@ -247,7 +247,7 @@ export default function HorariosPage() {
           </div>
 
           {/* Mobile View */}
-          <div className="md:hidden p-4 space-y-4">
+          <div className="md:hidden p-3 space-y-3">
             {schedule.map((row, index) => {
               const hasClasses = (['lun', 'mar', 'mie', 'jue', 'vie'] as const).some(day => row[day]);
               if (!hasClasses) return null;
@@ -257,31 +257,34 @@ export default function HorariosPage() {
                   key={index}
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.05 }}
-                  className="bg-[#0c0a08] border border-[#2a2318] rounded-xl p-4"
+                  transition={{ delay: index * 0.03 }}
+                  className="bg-[#0c0a08] border border-[#2a2318] rounded-lg p-3"
                 >
-                  <div className="text-[#d4a843] font-bold text-base mb-3">
+                  <div className="text-[#d4a843] font-bold text-sm mb-2 flex items-center gap-2">
+                    <div className="w-1 h-4 bg-[#d4a843] rounded"></div>
                     {row.time}
                   </div>
-                  <div className="space-y-2">
+                  <div className="space-y-1.5">
                     {(['lun', 'mar', 'mie', 'jue', 'vie'] as const).map((day) => {
                       const dayClass = row[day];
                       if (!dayClass) return null;
-                      const dayNames = { lun: 'Lun', mar: 'Mar', mie: 'Mié', jue: 'Jue', vie: 'Vie' };
+                      const dayNames = { lun: 'L', mar: 'M', mie: 'X', jue: 'J', vie: 'V' };
                       return (
                         <div
                           key={day}
-                          className="flex items-center gap-3 rounded-lg p-2.5 border border-[#2a2318]"
+                          className="flex items-center gap-2 rounded p-2 border-l-2"
                           style={{ 
-                            backgroundColor: dayClass.color + '15',
-                            borderLeftWidth: '3px',
+                            backgroundColor: dayClass.color + '10',
                             borderLeftColor: dayClass.color
                           }}
                         >
-                          <span className="text-[#8a7a62] text-xs font-bold w-8">
+                          <span 
+                            className="text-[#f5f0e8] text-[10px] font-bold w-5 h-5 flex items-center justify-center rounded-full shrink-0"
+                            style={{ backgroundColor: dayClass.color + '30' }}
+                          >
                             {dayNames[day]}
                           </span>
-                          <span className="text-[#f5f0e8] text-sm">
+                          <span className="text-[#f5f0e8] text-xs leading-tight">
                             {dayClass.name}
                           </span>
                         </div>
