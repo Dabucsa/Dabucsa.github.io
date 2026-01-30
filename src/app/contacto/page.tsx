@@ -80,12 +80,13 @@ export default function ContactoPage() {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-24">
-        <div className="grid lg:grid-cols-2 gap-12">
-          {/* Info */}
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-12">
+          {/* Info - Order 1 on desktop, Order 2 on mobile */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
+            className="order-2 lg:order-1"
           >
             <h2 className="text-2xl font-bold text-[#f5f0e8] mb-6">
               Visitanos
@@ -158,11 +159,12 @@ export default function ContactoPage() {
             </a>
           </motion.div>
 
-          {/* Form */}
+          {/* Form - Order 1 on mobile, Order 2 on desktop */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
+            className="order-1 lg:order-2"
           >
             <div className="bg-[#161210] border border-[#2a2318] rounded-2xl p-8">
               <h2 className="text-2xl font-bold text-[#f5f0e8] mb-2">
