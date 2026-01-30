@@ -5,7 +5,17 @@ import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 
 // Horarios organizados por tiempo
-const schedule = [
+type DayClass = { name: string; color: string } | null;
+type ScheduleRow = {
+  time: string;
+  lun: DayClass;
+  mar: DayClass;
+  mie: DayClass;
+  jue: DayClass;
+  vie: DayClass;
+};
+
+const schedule: ScheduleRow[] = [
   { 
     time: "09:00",
     lun: null,
@@ -209,24 +219,27 @@ export default function HorariosPage() {
                     <td className="p-3 text-[#d4a843] font-bold text-sm">
                       {row.time}
                     </td>
-                    {['lun', 'mar', 'mie', 'jue', 'vie'].map((day) => (
+                    {(['lun', 'mar', 'mie', 'jue', 'vie'] as const).map((day) => {
+                      const dayClass = row[day];
+                      return (
                       <td key={day} className="p-2">
-                        {row[day] ? (
+                        {dayClass ? (
                           <div
                             className="rounded-lg p-3 text-center text-[#f5f0e8] text-xs font-medium border border-[#2a2318] hover:border-[#d4a843]/30 transition-colors"
                             style={{ 
-                              backgroundColor: row[day].color + '15',
+                              backgroundColor: dayClass.color + '15',
                               borderLeftWidth: '3px',
-                              borderLeftColor: row[day].color
+                              borderLeftColor: dayClass.color
                             }}
                           >
-                            {row[day].name}
+                            {dayClass.name}
                           </div>
                         ) : (
                           <div className="text-center text-[#2a2318] text-xs">—</div>
                         )}
                       </td>
-                    ))}
+                    );
+                    })}
                   </motion.tr>
                 ))}
               </tbody>
@@ -236,7 +249,7 @@ export default function HorariosPage() {
           {/* Mobile View */}
           <div className="md:hidden p-4 space-y-4">
             {schedule.map((row, index) => {
-              const hasClasses = ['lun', 'mar', 'mie', 'jue', 'vie'].some(day => row[day]);
+              const hasClasses = (['lun', 'mar', 'mie', 'jue', 'vie'] as const).some(day => row[day]);
               if (!hasClasses) return null;
               
               return (
@@ -251,24 +264,25 @@ export default function HorariosPage() {
                     {row.time}
                   </div>
                   <div className="space-y-2">
-                    {['lun', 'mar', 'mie', 'jue', 'vie'].map((day) => {
-                      if (!row[day]) return null;
+                    {(['lun', 'mar', 'mie', 'jue', 'vie'] as const).map((day) => {
+                      const dayClass = row[day];
+                      if (!dayClass) return null;
                       const dayNames = { lun: 'Lun', mar: 'Mar', mie: 'Mié', jue: 'Jue', vie: 'Vie' };
                       return (
                         <div
                           key={day}
                           className="flex items-center gap-3 rounded-lg p-2.5 border border-[#2a2318]"
                           style={{ 
-                            backgroundColor: row[day].color + '15',
+                            backgroundColor: dayClass.color + '15',
                             borderLeftWidth: '3px',
-                            borderLeftColor: row[day].color
+                            borderLeftColor: dayClass.color
                           }}
                         >
                           <span className="text-[#8a7a62] text-xs font-bold w-8">
                             {dayNames[day]}
                           </span>
                           <span className="text-[#f5f0e8] text-sm">
-                            {row[day].name}
+                            {dayClass.name}
                           </span>
                         </div>
                       );
