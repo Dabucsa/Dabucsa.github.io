@@ -107,6 +107,23 @@ const disciplines = [
     color: "#16a34a",
     image: "/images/funcional.jpg",
   },
+  {
+    id: "competidores",
+    name: "Entrenamiento para Competidores",
+    description:
+      "Programa especializado para atletas que compiten en BJJ, MMA o Kickboxing. Entrenamiento de alto rendimiento enfocado en preparacion fisica, tecnica avanzada y estrategia de combate.",
+    benefits: [
+      "Preparacion fisica de elite",
+      "Tecnicas avanzadas de competicion",
+      "Estrategia y analisis tactico",
+      "Sparring intensivo",
+      "Coaching personalizado",
+    ],
+    schedule: ["Lunes, Miercoles y Viernes: 12:30 - 14:00"],
+    level: "Avanzado - Solo con autorizacion de instructor",
+    color: "#c44a2e",
+    image: "/images/competidores.jpg",
+  },
 ];
 
 export default function DisciplinasPage() {
