@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
@@ -131,6 +132,24 @@ const schedule: ScheduleRow[] = [
 ];
 
 export default function HorariosPage() {
+  const [selectedDay, setSelectedDay] = useState<'lun' | 'mar' | 'mie' | 'jue' | 'vie'>('lun');
+  
+  const dayNames = {
+    lun: 'Lunes',
+    mar: 'Martes',
+    mie: 'Miércoles',
+    jue: 'Jueves',
+    vie: 'Viernes'
+  };
+  
+  const dayShortNames = {
+    lun: 'Lun',
+    mar: 'Mar',
+    mie: 'Mié',
+    jue: 'Jue',
+    vie: 'Vie'
+  };
+
   return (
     <div className="min-h-screen bg-[#0c0a08] pt-24">
       {/* Header */}
@@ -246,54 +265,73 @@ export default function HorariosPage() {
             </table>
           </div>
 
-          {/* Mobile View */}
-          <div className="md:hidden p-3 space-y-3">
-            {schedule.map((row, index) => {
-              const hasClasses = (['lun', 'mar', 'mie', 'jue', 'vie'] as const).some(day => row[day]);
-              if (!hasClasses) return null;
-              
-              return (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.03 }}
-                  className="bg-[#0c0a08] border border-[#2a2318] rounded-lg p-3"
+          {/* Mobile View with Tabs */}
+          <div className="md:hidden">
+            {/* Day Tabs */}
+            <div className="flex gap-2 mb-4 p-3 overflow-x-auto">
+              {(['lun', 'mar', 'mie', 'jue', 'vie'] as const).map((day) => (
+                <button
+                  key={day}
+                  onClick={() => setSelectedDay(day)}
+                  className={`px-4 py-2.5 rounded-lg font-bold text-sm uppercase tracking-wider transition-all shrink-0 ${
+                    selectedDay === day
+                      ? 'bg-[#d4a843] text-[#0c0a08]'
+                      : 'bg-[#161210] border border-[#2a2318] text-[#8a7a62] hover:border-[#d4a843]/40 hover:text-[#d4a843]'
+                  }`}
                 >
-                  <div className="text-[#d4a843] font-bold text-sm mb-2 flex items-center gap-2">
-                    <div className="w-1 h-4 bg-[#d4a843] rounded"></div>
-                    {row.time}
-                  </div>
-                  <div className="space-y-1.5">
-                    {(['lun', 'mar', 'mie', 'jue', 'vie'] as const).map((day) => {
-                      const dayClass = row[day];
-                      if (!dayClass) return null;
-                      const dayNames = { lun: 'L', mar: 'M', mie: 'X', jue: 'J', vie: 'V' };
-                      return (
-                        <div
-                          key={day}
-                          className="flex items-center gap-2 rounded p-2 border-l-2"
-                          style={{ 
-                            backgroundColor: dayClass.color + '10',
-                            borderLeftColor: dayClass.color
-                          }}
-                        >
-                          <span 
-                            className="text-[#f5f0e8] text-[10px] font-bold w-5 h-5 flex items-center justify-center rounded-full shrink-0"
-                            style={{ backgroundColor: dayClass.color + '30' }}
-                          >
-                            {dayNames[day]}
-                          </span>
-                          <span className="text-[#f5f0e8] text-xs leading-tight">
-                            {dayClass.name}
-                          </span>
+                  {dayShortNames[day]}
+                </button>
+              ))}
+            </div>
+
+            {/* Selected Day Schedule */}
+            <div className="p-3">
+              <h3 className="text-[#d4a843] font-bold text-lg mb-4 px-2">
+                {dayNames[selectedDay]}
+              </h3>
+              <div className="space-y-2.5">
+                {schedule
+                  .filter(row => row[selectedDay])
+                  .map((row, index) => {
+                    const dayClass = row[selectedDay]!;
+                    return (
+                      <motion.div
+                        key={index}
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: index * 0.05 }}
+                        className="rounded-lg p-4 border-l-4"
+                        style={{ 
+                          backgroundColor: dayClass.color + '15',
+                          borderLeftColor: dayClass.color
+                        }}
+                      >
+                        <div className="flex items-center gap-3">
+                          <div className="shrink-0">
+                            <div 
+                              className="text-[#0c0a08] font-bold text-sm px-3 py-1.5 rounded-md"
+                              style={{ backgroundColor: dayClass.color }}
+                            >
+                              {row.time}
+                            </div>
+                          </div>
+                          <div className="flex-1">
+                            <div className="text-[#f5f0e8] font-medium text-sm leading-snug">
+                              {dayClass.name}
+                            </div>
+                          </div>
                         </div>
-                      );
-                    })}
-                  </div>
-                </motion.div>
-              );
-            })}
+                      </motion.div>
+                    );
+                  })}
+              </div>
+              
+              {schedule.filter(row => row[selectedDay]).length === 0 && (
+                <div className="text-center py-12 text-[#8a7a62]">
+                  No hay clases programadas para este día
+                </div>
+              )}
+            </div>
           </div>
         </motion.div>
 
