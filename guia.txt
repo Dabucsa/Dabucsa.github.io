@@ -1,0 +1,117 @@
+hola! quiero construir una web simple para publica en mi github... que sirva de guia para los usuarios del airbnb que tengo en pucon andino, la respuesta simple a resolver vengo por tantos dias que puedo hacer? a donde puedo ir?... analiza de donde podemos sacar destinos, planes, lugares, para comer para ir para visitar... que sirvan de referencia y armemos algo entretenido
+
+Steering
+The MCP server Microsoft Sentinel may have new tools and requires interaction to start. Start it now?
+
+
+Muy buena idea. Ya encontré bastante contexto útil en tu workspace — tienes el prototipo villarrica-planner/index.html con ~50 actividades, restaurantes, termas y destinos de Pucón ya categorizados. Además la carpeta pucontour está vacía y lista para el proyecto.
+
+Antes de armar el plan, necesito alinear algunas decisiones:
+
+Asked 4 questions (Tech Stack, Concepto, Contenido, Branding)
+
+¿Qué enfoque prefieres para la web? Para GitHub Pages necesitamos algo estático.
+Next.js static export
+- Como zeroaustral y dojo-zen-pucon. Más estructura, Tailwind, componentes React. Más trabajo pero escalable.
+¿Cuál es la experiencia principal que quieres para tus huéspedes?
+Ambos
+- Guía por categorías + sugerencias de itinerarios de 1 a 7 días
+Sobre los datos del villarrica-planner (termas, restaurantes, actividades): ¿quieres usarlos como base y agregar más, o prefieres empezar de cero con tus propias recomendaciones?
+Usar como base y expandir
+- Reutilizar los ~50 destinos ya listados y agregar/ajustar
+¿Cómo quieres que se llame la guía y qué tono debe tener?
+Descubre Pucón
+- Más genérico, enfocado en el destino
+Perfecto, tengo toda la info necesaria. Aquí va el plan:
+
+Plan: Descubre Pucón — Guía Airbnb
+Sitio web estático con Next.js 16 + Tailwind CSS 4 + TypeScript, publicado en GitHub Pages desde la carpeta pucontour. Combina una guía por categorías (restaurantes, termas, aventura, naturaleza, cultura) con itinerarios sugeridos de 1 a 7 días. Se reutiliza la base de ~50 destinos de villarrica-planner/index.html expandiéndola con más contenido. Estética mobile-first (los huéspedes consultarán desde el celular), tema oscuro premium similar al villarrica-planner con glassmorphism y animaciones suaves con Framer Motion. Sin backend — todo es contenido estático con datos en archivos .ts.
+
+Steps
+
+Scaffold del proyecto en pucontour con Next.js 16 App Router, TypeScript, Tailwind CSS 4, Framer Motion, Lucide React — mismas dependencias y estructura que package.json y next.config.ts (output: "export", images: { unoptimized: true })
+
+Estructura de carpetas siguiendo el patrón del workspace:
+
+src/app/ → layout, page, globals.css, sitemap, robots
+src/app/itinerarios/ → página con selector de días (1, 2-3, 4-5, 6-7)
+src/app/restaurantes/ → guía gastronómica
+src/app/termas/ → termas y hot springs
+src/app/aventura/ → deportes y actividades outdoor
+src/app/naturaleza/ → parques, lagos, senderos
+src/app/cultura/ → museos, artesanía, experiencias mapuche
+src/app/info/ → tips útiles, emergencias, transporte, clima
+src/components/layout/ → Header.tsx, Footer.tsx
+src/components/sections/ → Hero.tsx, DaySelector.tsx, CategoryGrid.tsx, PlaceCard.tsx, ItineraryTimeline.tsx
+src/components/ui/ → componentes reutilizables (Badge, Card, etc.)
+src/data/ → archivos .ts con toda la data de destinos e itinerarios
+Modelo de datos en src/data/:
+
+places.ts — array tipado de todos los destinos con: id, name, category, description, price, duration, emoji, mapUrl (link a Google Maps), tips (consejo personal del anfitrión), bestFor (familia/aventura/pareja), weather (indoor/outdoor/both)
+itineraries.ts — itinerarios pre-armados para 1, 2-3, 4-5 y 6-7 días, cada uno como array de días con array de actividades referenciando places
+categories.ts — metadata de las categorías (nombre, emoji, descripción, color)
+Página Home (src/app/page.tsx):
+
+Hero con foto/gradiente de Pucón, título "Descubre Pucón" y subtítulo "Tu guía para explorar Pucón Andino"
+Selector interactivo "¿Cuántos días te quedas?" con 4 botones (1 día, 2-3, 4-5, 6-7) que llevan a /itinerarios?dias=X
+Grid de categorías con cards animadas que llevan a cada sección
+Sección "Tips del anfitrión" con info rápida (clima actual aproximado por temporada, qué llevar, cómo moverse)
+Página Itinerarios (src/app/itinerarios/page.tsx):
+
+Selector de días como tabs/segmented control
+Para cada día del itinerario: timeline visual con hora, emoji, nombre, descripción, precio estimado y link a Google Maps
+Inspirado en la UI de timeline del villarrica-planner pero con diseño React/Tailwind
+Variantes por perfil (familia/aventura/pareja) como toggle opcional
+Páginas de categoría (restaurantes, termas, aventura, naturaleza, cultura):
+
+Grid de PlaceCard con emoji, nombre, descripción corta, rango de precio, duración estimada, badge "ideal para familia/pareja/aventura"
+Cada card expandible o con detalle inline (tip del anfitrión, link Maps, horario sugerido)
+Filtro simple por perfil (familia/aventura/pareja)
+Página Info (src/app/info/page.tsx):
+
+Números de emergencia (SAMU, Bomberos, Carabineros)
+Cómo llegar desde Santiago/Temuco
+Transporte local (transfers, buses, app de taxis)
+Qué llevar según temporada
+Estado del volcán (link a SERNAGEOMIN)
+WiFi y conectividad
+Supermercados y farmacias cercanas
+Layout global (src/app/layout.tsx):
+
+Header sticky con navegación mobile hamburger + desktop nav, logo "Descubre Pucón" con emoji 🌋
+Footer con créditos "Hecho con ❤️ por tu anfitrión en Pucón Andino" + link a ZeroAustral
+WhatsApp floating button (como en zeroaustral) para contacto directo con el anfitrión
+Tema oscuro con palette verde/esmeralda inspirada en el bosque sureño
+SEO y metadata:
+
+sitemap.ts y robots.ts para indexación
+Open Graph metadata con imagen representativa
+Schema.org TouristAttraction y LocalBusiness JSON-LD
+Deploy GitHub Pages:
+
+Agregar script "deploy" en package.json
+Configurar GitHub Actions workflow (.github/workflows/deploy.yml) para build + deploy a gh-pages branch automáticamente en cada push
+Configurar basePath y assetPrefix en next.config.ts para el repo name (ej: pucontour)
+Contenido inicial a incluir (extraído del villarrica-planner + expansión):
+
+Categoría	Lugares
+Restaurantes	La Maga, Da Alessandro, Trawen (mapuche), La Casa de los Vientos, Café Amancay, Mercado Municipal, Mercado Artesanal, Cervecería Kross
+Termas	Los Pozones, Huife, Menetue + tips por tipo (rústico vs premium vs privado)
+Aventura	Ascenso Volcán, Kayak lago, Rafting Trancura/Liucura, Bike Huerquenes, Escalada Caburga, Enduro Curarrehue, Rocódromo
+Naturaleza	Parque Huerquehue, Playa Pucón, Santuario El Cañi, Lago Caburgua, Bosque Siempreverde
+Cultura	Museo Mapuche Villarrica, Clase cocina mapuche, Taller cerámica, Astroturismo
+Verification
+
+npm run build debe generar la carpeta out/ sin errores
+Validar que todas las rutas generan HTML estático correcto
+Probar navegación mobile-first en viewport 375px
+Deploy a GitHub Pages y verificar que todas las páginas cargan con basePath correctamente
+Lighthouse score: apuntar a 95+ en Performance, 100 en Accessibility
+Verificar links a Google Maps abren correctamente en móvil
+Decisions
+
+Next.js static export sobre HTML puro: permite componentes reutilizables, tipado, y escalabilidad futura sin sacrificar la naturaleza estática para GitHub Pages
+Datos en archivos .ts sobre CMS/API: simplicidad total, cero dependencias externas, fácil de editar
+Tema oscuro: consistente con la estética de villarrica-planner y los otros proyectos del workspace, además luce premium
+WhatsApp button: canal directo anfitrión-huésped, ya implementado en zeroaustral como referencia
+No incluir sistema de afiliados/premium: este es una guía de cortesía para huéspedes, no un producto monetizable (simplifica mucho el scope)
