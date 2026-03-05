@@ -3,9 +3,12 @@
 import { motion } from "framer-motion";
 import { getPlacesByCategory } from "@/data/places";
 import PlaceCard from "@/components/ui/PlaceCard";
+import { useLanguage, useT } from "@/i18n";
 
 export default function AventuraPage() {
   const places = getPlacesByCategory("aventura");
+  const { lang } = useLanguage();
+  const t = useT(lang);
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-8">
@@ -15,11 +18,10 @@ export default function AventuraPage() {
         className="mb-8"
       >
         <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight mb-2">
-          🏔️ Aventura
+          {t("page.aventura.title")}
         </h1>
         <p className="text-muted2 leading-relaxed">
-          Pucón es la capital de la aventura en Chile. Desde el ascenso al
-          volcán hasta rafting, kayak, escalada y mountain bike.
+          {t("page.aventura.desc")}
         </p>
       </motion.div>
 
@@ -30,19 +32,19 @@ export default function AventuraPage() {
         transition={{ delay: 0.1 }}
         className="glass-card p-5 mb-6"
       >
-        <h2 className="text-sm font-bold mb-3">⚡ Nivel de intensidad</h2>
+        <h2 className="text-sm font-bold mb-3">{t("page.aventura.intensity")}</h2>
         <div className="grid sm:grid-cols-3 gap-3 text-xs text-muted2">
           <div className="flex items-start gap-2">
-            <span className="badge badge-green">Suave</span>
-            <span>Kayak, canopy, rocódromo</span>
+            <span className="badge badge-green">{t("page.aventura.mild")}</span>
+            <span>{t("page.aventura.mild.desc")}</span>
           </div>
           <div className="flex items-start gap-2">
-            <span className="badge badge-orange">Medio</span>
-            <span>Rafting, bike, escalada</span>
+            <span className="badge badge-orange">{t("page.aventura.medium")}</span>
+            <span>{t("page.aventura.medium.desc")}</span>
           </div>
           <div className="flex items-start gap-2">
-            <span className="badge" style={{ background: "rgba(248,113,113,0.15)", color: "#fca5a5", border: "1px solid rgba(248,113,113,0.25)" }}>Extremo</span>
-            <span>Volcán, enduro</span>
+            <span className="badge" style={{ background: "rgba(248,113,113,0.15)", color: "#fca5a5", border: "1px solid rgba(248,113,113,0.25)" }}>{t("page.aventura.extreme")}</span>
+            <span>{t("page.aventura.extreme.desc")}</span>
           </div>
         </div>
       </motion.div>

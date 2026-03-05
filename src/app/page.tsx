@@ -9,8 +9,16 @@ import { itineraries } from "@/data/itineraries";
 import CategoryCard from "@/components/ui/CategoryCard";
 import DaySelector from "@/components/sections/DaySelector";
 import WeatherWidget from "@/components/sections/WeatherWidget";
+import { useLanguage, useT } from "@/i18n";
 
 export default function HomePage() {
+  const { lang } = useLanguage();
+  const t = useT(lang);
+
+  const summerItems = t("home.tips.summer.items").split("|");
+  const winterItems = t("home.tips.winter.items").split("|");
+  const transportItems = t("home.transport.items").split("|");
+
   return (
     <div className="max-w-5xl mx-auto px-4 py-8">
       {/* ── HERO ── */}
@@ -31,12 +39,11 @@ export default function HomePage() {
         </motion.div>
 
         <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight mb-4">
-          Descubre{" "}
+          {lang === "es" ? "Descubre" : "Discover"}{" "}
           <span className="gradient-text">Pucón</span>
         </h1>
         <p className="text-lg md:text-xl text-muted2 max-w-2xl mx-auto leading-relaxed">
-          Tu guía para explorar todo lo que Pucón y sus alrededores tienen para
-          ofrecer. Restaurantes, termas, aventura, naturaleza y cultura.
+          {t("home.hero.subtitle")}
         </p>
 
         <div className="flex flex-wrap justify-center gap-3 mt-8">
@@ -45,14 +52,14 @@ export default function HomePage() {
             className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-emerald-500 to-emerald-700 text-white rounded-2xl font-bold shadow-lg shadow-emerald-500/30 hover:shadow-emerald-500/50 hover:-translate-y-0.5 transition-all"
           >
             <Calendar size={18} />
-            Ver itinerarios
+            {t("nav.itinerarios")}
           </Link>
           <Link
             href="/info"
             className="flex items-center gap-2 px-6 py-3 bg-card border border-border text-foreground rounded-2xl font-bold hover:bg-card-hover hover:-translate-y-0.5 transition-all"
           >
             <Info size={18} />
-            Info útil
+            {t("nav.info")}
           </Link>
         </div>
       </motion.section>
@@ -61,7 +68,7 @@ export default function HomePage() {
       <section className="mb-16">
         <div className="flex items-center gap-2 mb-6">
           <span className="text-xs font-semibold uppercase tracking-widest text-muted">
-            ¿Cuántos días te quedas?
+            {t("days.title")}
           </span>
           <div className="flex-1 h-px bg-border" />
         </div>
@@ -72,7 +79,7 @@ export default function HomePage() {
       <section className="mb-16">
         <div className="flex items-center gap-2 mb-6">
           <span className="text-xs font-semibold uppercase tracking-widest text-muted">
-            Clima en tiempo real
+            {lang === "es" ? "Clima en tiempo real" : "Live weather"}
           </span>
           <div className="flex-1 h-px bg-border" />
         </div>
@@ -83,7 +90,7 @@ export default function HomePage() {
       <section className="mb-16">
         <div className="flex items-center gap-2 mb-6">
           <span className="text-xs font-semibold uppercase tracking-widest text-muted">
-            Explora por categoría
+            {t("home.categories.title")}
           </span>
           <div className="flex-1 h-px bg-border" />
         </div>
@@ -107,7 +114,7 @@ export default function HomePage() {
       <section className="mb-16">
         <div className="flex items-center gap-2 mb-6">
           <span className="text-xs font-semibold uppercase tracking-widest text-muted">
-            Tips del anfitrión
+            {t("home.tips.title")}
           </span>
           <div className="flex-1 h-px bg-border" />
         </div>
@@ -120,14 +127,12 @@ export default function HomePage() {
           >
             <div className="flex items-center gap-3 mb-3">
               <Sun size={20} className="text-yellow-400" />
-              <h3 className="text-sm font-bold">Verano (Dic - Mar)</h3>
+              <h3 className="text-sm font-bold">{t("home.tips.summer.title")}</h3>
             </div>
             <ul className="text-xs text-muted2 space-y-1.5 leading-relaxed">
-              <li>☀️ Temperaturas de 20-30°C</li>
-              <li>🏖️ Ideal para lago, playa y trekking</li>
-              <li>🧴 Protector solar SPF50+ indispensable</li>
-              <li>📅 Reservar actividades con anticipación</li>
-              <li>🌅 Atardeceres a las 21:00</li>
+              {summerItems.map((item, i) => (
+                <li key={i}>• {item}</li>
+              ))}
             </ul>
           </motion.div>
 
@@ -139,14 +144,12 @@ export default function HomePage() {
           >
             <div className="flex items-center gap-3 mb-3">
               <Snowflake size={20} className="text-sky-400" />
-              <h3 className="text-sm font-bold">Invierno (Jun - Sep)</h3>
+              <h3 className="text-sm font-bold">{t("home.tips.winter.title")}</h3>
             </div>
             <ul className="text-xs text-muted2 space-y-1.5 leading-relaxed">
-              <li>❄️ Temperaturas de 2-10°C</li>
-              <li>⛷️ Temporada de ski en el volcán</li>
-              <li>♨️ Las termas se disfrutan aún más</li>
-              <li>🧥 Ropa de abrigo impermeable</li>
-              <li>🌧️ Lluvia frecuente — plan B bajo techo</li>
+              {winterItems.map((item, i) => (
+                <li key={i}>• {item}</li>
+              ))}
             </ul>
           </motion.div>
 
@@ -158,14 +161,12 @@ export default function HomePage() {
           >
             <div className="flex items-center gap-3 mb-3">
               <MapPin size={20} className="text-emerald-400" />
-              <h3 className="text-sm font-bold">Cómo moverse</h3>
+              <h3 className="text-sm font-bold">{t("home.transport.title")}</h3>
             </div>
             <ul className="text-xs text-muted2 space-y-1.5 leading-relaxed">
-              <li>🚗 Arriendo de auto es lo más práctico</li>
-              <li>🚐 Transfers a termas y parques</li>
-              <li>🚶 El centro de Pucón es caminable</li>
-              <li>📱 Apps de taxi local disponibles</li>
-              <li>🚌 Buses a Villarrica cada 15 min</li>
+              {transportItems.map((item, i) => (
+                <li key={i}>• {item}</li>
+              ))}
             </ul>
           </motion.div>
         </div>
@@ -176,20 +177,20 @@ export default function HomePage() {
         <div className="glass-card p-5">
           <div className="flex items-center gap-2 mb-3">
             <span className="text-lg">🚨</span>
-            <h3 className="text-sm font-bold">Números de emergencia</h3>
+            <h3 className="text-sm font-bold">{t("home.emergency.title")}</h3>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs">
             <div className="flex items-center gap-2 text-muted2">
               <span className="font-mono font-bold text-red-400">131</span>
-              Ambulancia (SAMU)
+              {t("home.emergency.ambulance")}
             </div>
             <div className="flex items-center gap-2 text-muted2">
               <span className="font-mono font-bold text-orange-400">132</span>
-              Bomberos
+              {t("home.emergency.fire")}
             </div>
             <div className="flex items-center gap-2 text-muted2">
               <span className="font-mono font-bold text-sky-400">133</span>
-              Carabineros
+              {t("home.emergency.police")}
             </div>
             <div className="flex items-center gap-2 text-muted2">
               <span className="font-mono font-bold text-emerald-400">134</span>

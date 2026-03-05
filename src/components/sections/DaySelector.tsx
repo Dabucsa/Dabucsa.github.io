@@ -4,19 +4,23 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { Calendar } from "lucide-react";
 import type { Itinerary } from "@/data/types";
+import { useLanguage, useT } from "@/i18n";
 
 interface DaySelectorProps {
   itineraries: Itinerary[];
 }
 
-const dayOptions = [
-  { days: 1, label: "1 día", emoji: "⚡" },
-  { days: 3, label: "2-3 días", emoji: "📅" },
-  { days: 5, label: "4-5 días", emoji: "🗺️" },
-  { days: 7, label: "6-7 días", emoji: "🏆" },
-];
-
 export default function DaySelector({ itineraries }: DaySelectorProps) {
+  const { lang } = useLanguage();
+  const t = useT(lang);
+
+  const dayOptions = [
+    { days: 1, label: t("days.1.label"), sub: t("days.1.sub"), emoji: "⚡" },
+    { days: 3, label: t("days.3.label"), sub: t("days.3.sub"), emoji: "📅" },
+    { days: 5, label: t("days.5.label"), sub: t("days.5.sub"), emoji: "🗺️" },
+    { days: 7, label: t("days.7.label"), sub: t("days.7.sub"), emoji: "🏆" },
+  ];
+
   return (
     <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
       {dayOptions.map((option, i) => {
@@ -41,7 +45,7 @@ export default function DaySelector({ itineraries }: DaySelectorProps) {
               {itinerary && (
                 <span className="text-[11px] text-muted2 flex items-center gap-1">
                   <Calendar size={10} />
-                  {itinerary.plan.length} {itinerary.plan.length === 1 ? "día" : "días"} planificados
+                  {itinerary.plan.length} {t("days.planned")}
                 </span>
               )}
             </Link>

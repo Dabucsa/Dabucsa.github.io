@@ -3,9 +3,12 @@
 import { motion } from "framer-motion";
 import { getPlacesByCategory } from "@/data/places";
 import PlaceCard from "@/components/ui/PlaceCard";
+import { useLanguage, useT } from "@/i18n";
 
 export default function RestaurantesPage() {
   const places = getPlacesByCategory("restaurantes");
+  const { lang } = useLanguage();
+  const t = useT(lang);
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-8">
@@ -15,11 +18,10 @@ export default function RestaurantesPage() {
         className="mb-8"
       >
         <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight mb-2">
-          🍽️ Restaurantes
+          {t("page.restaurantes.title")}
         </h1>
         <p className="text-muted2 leading-relaxed">
-          Desde empanadas en el mercado hasta gastronomía mapuche contemporánea.
-          Mis recomendaciones personales para comer en Pucón.
+          {t("page.restaurantes.desc")}
         </p>
       </motion.div>
 

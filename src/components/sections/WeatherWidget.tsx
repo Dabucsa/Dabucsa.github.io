@@ -12,6 +12,8 @@ import {
   Thermometer,
   Wind,
 } from "lucide-react";
+import { useLanguage, useT } from "@/i18n";
+import type { Lang } from "@/i18n";
 
 interface WeatherData {
   temperature: number;
@@ -28,37 +30,38 @@ interface WeatherData {
   };
 }
 
-const WMO_CODES: Record<number, { label: string; icon: string }> = {
-  0: { label: "Despejado", icon: "☀️" },
-  1: { label: "Mayormente despejado", icon: "🌤️" },
-  2: { label: "Parcialmente nublado", icon: "⛅" },
-  3: { label: "Nublado", icon: "☁️" },
-  45: { label: "Neblina", icon: "🌫️" },
-  48: { label: "Neblina helada", icon: "🌫️" },
-  51: { label: "Llovizna leve", icon: "🌦️" },
-  53: { label: "Llovizna", icon: "🌦️" },
-  55: { label: "Llovizna fuerte", icon: "🌧️" },
-  61: { label: "Lluvia leve", icon: "🌧️" },
-  63: { label: "Lluvia moderada", icon: "🌧️" },
-  65: { label: "Lluvia fuerte", icon: "🌧️" },
-  66: { label: "Lluvia helada", icon: "🌨️" },
-  67: { label: "Lluvia helada fuerte", icon: "🌨️" },
-  71: { label: "Nieve leve", icon: "❄️" },
-  73: { label: "Nieve moderada", icon: "❄️" },
-  75: { label: "Nieve fuerte", icon: "❄️" },
-  77: { label: "Granizo", icon: "🌨️" },
-  80: { label: "Chubascos leves", icon: "🌦️" },
-  81: { label: "Chubascos", icon: "🌧️" },
-  82: { label: "Chubascos fuertes", icon: "⛈️" },
-  85: { label: "Nieve leve", icon: "🌨️" },
-  86: { label: "Nieve fuerte", icon: "🌨️" },
-  95: { label: "Tormenta", icon: "⛈️" },
-  96: { label: "Tormenta con granizo", icon: "⛈️" },
-  99: { label: "Tormenta fuerte", icon: "⛈️" },
+const WMO_CODES: Record<number, { es: string; en: string; icon: string }> = {
+  0: { es: "Despejado", en: "Clear", icon: "☀️" },
+  1: { es: "Mayormente despejado", en: "Mostly clear", icon: "🌤️" },
+  2: { es: "Parcialmente nublado", en: "Partly cloudy", icon: "⛅" },
+  3: { es: "Nublado", en: "Overcast", icon: "☁️" },
+  45: { es: "Neblina", en: "Fog", icon: "🌫️" },
+  48: { es: "Neblina helada", en: "Freezing fog", icon: "🌫️" },
+  51: { es: "Llovizna leve", en: "Light drizzle", icon: "🌦️" },
+  53: { es: "Llovizna", en: "Drizzle", icon: "🌦️" },
+  55: { es: "Llovizna fuerte", en: "Heavy drizzle", icon: "🌧️" },
+  61: { es: "Lluvia leve", en: "Light rain", icon: "🌧️" },
+  63: { es: "Lluvia moderada", en: "Moderate rain", icon: "🌧️" },
+  65: { es: "Lluvia fuerte", en: "Heavy rain", icon: "🌧️" },
+  66: { es: "Lluvia helada", en: "Freezing rain", icon: "🌨️" },
+  67: { es: "Lluvia helada fuerte", en: "Heavy freezing rain", icon: "🌨️" },
+  71: { es: "Nieve leve", en: "Light snow", icon: "❄️" },
+  73: { es: "Nieve moderada", en: "Moderate snow", icon: "❄️" },
+  75: { es: "Nieve fuerte", en: "Heavy snow", icon: "❄️" },
+  77: { es: "Granizo", en: "Hail", icon: "🌨️" },
+  80: { es: "Chubascos leves", en: "Light showers", icon: "🌦️" },
+  81: { es: "Chubascos", en: "Showers", icon: "🌧️" },
+  82: { es: "Chubascos fuertes", en: "Heavy showers", icon: "⛈️" },
+  85: { es: "Nieve leve", en: "Light snow", icon: "🌨️" },
+  86: { es: "Nieve fuerte", en: "Heavy snow", icon: "🌨️" },
+  95: { es: "Tormenta", en: "Thunderstorm", icon: "⛈️" },
+  96: { es: "Tormenta con granizo", en: "Hailstorm", icon: "⛈️" },
+  99: { es: "Tormenta fuerte", en: "Severe storm", icon: "⛈️" },
 };
 
-function getWeatherInfo(code: number) {
-  return WMO_CODES[code] || { label: "Desconocido", icon: "🌡️" };
+function getWeatherInfo(code: number, lang: Lang) {
+  const entry = WMO_CODES[code] || { es: "Desconocido", en: "Unknown", icon: "🌡️" };
+  return { label: entry[lang], icon: entry.icon };
 }
 
 function getWeatherIcon(code: number, size: number) {
@@ -71,15 +74,16 @@ function getWeatherIcon(code: number, size: number) {
   return <CloudRain size={size} className="text-violet-400" />;
 }
 
-function getDayName(dateStr: string) {
+function getDayName(dateStr: string, lang: Lang, t: (key: string) => string) {
   const d = new Date(dateStr + "T12:00:00");
   const today = new Date();
   const tomorrow = new Date(today);
   tomorrow.setDate(tomorrow.getDate() + 1);
 
-  if (d.toDateString() === today.toDateString()) return "Hoy";
-  if (d.toDateString() === tomorrow.toDateString()) return "Mañana";
-  return d.toLocaleDateString("es-CL", { weekday: "short" }).replace(".", "");
+  if (d.toDateString() === today.toDateString()) return lang === "es" ? "Hoy" : "Today";
+  if (d.toDateString() === tomorrow.toDateString()) return lang === "es" ? "Mañana" : "Tomorrow";
+  const dayNames = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
+  return t(`weather.${dayNames[d.getDay()]}`);
 }
 
 // Pucón coordinates: -39.27, -71.97
@@ -90,6 +94,8 @@ export default function WeatherWidget() {
   const [weather, setWeather] = useState<WeatherData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+  const { lang } = useLanguage();
+  const t = useT(lang);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -141,12 +147,12 @@ export default function WeatherWidget() {
   if (error || !weather) {
     return (
       <div className="glass-card p-5 text-center text-sm text-muted2">
-        ☁️ No se pudo cargar el clima. Intenta más tarde.
+        ☁️ {lang === "es" ? "No se pudo cargar el clima. Intenta más tarde." : "Could not load weather. Try again later."}
       </div>
     );
   }
 
-  const current = getWeatherInfo(weather.weatherCode);
+  const current = getWeatherInfo(weather.weatherCode, lang);
 
   return (
     <motion.div
@@ -160,7 +166,7 @@ export default function WeatherWidget() {
         <div className="flex items-center gap-2 mb-4">
           <Thermometer size={16} className="text-emerald-400" />
           <span className="text-xs font-bold uppercase tracking-widest text-muted">
-            Clima en Pucón · Ahora
+            {t("weather.title")}
           </span>
         </div>
 
@@ -173,7 +179,7 @@ export default function WeatherWidget() {
               </div>
               <div className="text-sm text-muted2">{current.label}</div>
               <div className="text-xs text-muted mt-0.5">
-                Sensación {weather.apparentTemperature}°C
+                {t("weather.feelsLike")} {weather.apparentTemperature}°C
               </div>
             </div>
           </div>
@@ -195,14 +201,14 @@ export default function WeatherWidget() {
       <div className="border-t border-border px-5 py-4">
         <div className="grid grid-cols-5 gap-2">
           {weather.daily.date.map((date, i) => {
-            const dayInfo = getWeatherInfo(weather.daily.weatherCode[i]);
+            const dayInfo = getWeatherInfo(weather.daily.weatherCode[i], lang);
             return (
               <div
                 key={date}
                 className="flex flex-col items-center gap-1 text-center"
               >
                 <span className="text-xs font-semibold text-muted2 uppercase">
-                  {getDayName(date)}
+                  {getDayName(date, lang, t)}
                 </span>
                 <span className="text-xl">{dayInfo.icon}</span>
                 <div className="text-xs">
@@ -222,7 +228,7 @@ export default function WeatherWidget() {
 
       <div className="border-t border-border px-5 py-2">
         <p className="text-xs text-muted text-center">
-          Datos de Open-Meteo · Actualización en tiempo real
+          {t("weather.credit")}
         </p>
       </div>
     </motion.div>

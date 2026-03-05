@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import type { CategoryInfo } from "@/data/types";
+import { useLanguage, useT } from "@/i18n";
 
 interface CategoryCardProps {
   category: CategoryInfo;
@@ -15,6 +16,11 @@ export default function CategoryCard({
   index,
   count,
 }: CategoryCardProps) {
+  const { lang } = useLanguage();
+  const t = useT(lang);
+  const name = t(`cat.${category.slug}.name`);
+  const description = t(`cat.${category.slug}.desc`);
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -28,12 +34,12 @@ export default function CategoryCard({
         <div className="w-14 h-14 rounded-2xl bg-card-hover border border-border flex items-center justify-center text-3xl group-hover:scale-110 transition-transform">
           {category.emoji}
         </div>
-        <h3 className="text-base font-bold text-foreground">{category.name}</h3>
+        <h3 className="text-base font-bold text-foreground">{name}</h3>
         <p className="text-xs text-muted2 leading-relaxed">
-          {category.description}
+          {description}
         </p>
         <span className="text-[11px] text-muted font-medium">
-          {count} {count === 1 ? "lugar" : "lugares"} →
+          {count} {count === 1 ? t("card.place") : t("card.places")} →
         </span>
       </Link>
     </motion.div>

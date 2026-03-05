@@ -3,9 +3,12 @@
 import { motion } from "framer-motion";
 import { getPlacesByCategory } from "@/data/places";
 import PlaceCard from "@/components/ui/PlaceCard";
+import { useLanguage, useT } from "@/i18n";
 
 export default function CulturaPage() {
   const places = getPlacesByCategory("cultura");
+  const { lang } = useLanguage();
+  const t = useT(lang);
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-8">
@@ -15,12 +18,10 @@ export default function CulturaPage() {
         className="mb-8"
       >
         <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight mb-2">
-          🎨 Cultura
+          {t("page.cultura.title")}
         </h1>
         <p className="text-muted2 leading-relaxed">
-          Pucón está en territorio mapuche. Descubrí su historia, su cocina
-          ancestral, artesanía y el cielo austral más impresionante que vas
-          a ver.
+          {t("page.cultura.desc")}
         </p>
       </motion.div>
 
@@ -34,11 +35,9 @@ export default function CulturaPage() {
         <div className="flex items-start gap-3">
           <span className="text-2xl">🙏</span>
           <div>
-            <h2 className="text-sm font-bold mb-1">Cultura Mapuche</h2>
+            <h2 className="text-sm font-bold mb-1">{t("page.cultura.note.title")}</h2>
             <p className="text-xs text-muted2 leading-relaxed">
-              La zona de Pucón es parte del Wallmapu (territorio mapuche).
-              Aprovechen de conocer su rica cultura, cocina y cosmovisión.
-              Siempre con respeto y curiosidad genuina.
+              {t("page.cultura.note.desc")}
             </p>
           </div>
         </div>

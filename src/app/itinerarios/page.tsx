@@ -6,21 +6,28 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { itineraries } from "@/data/itineraries";
 import ItineraryTimeline from "@/components/ui/ItineraryTimeline";
-
-const dayOptions = [
-  { days: 1, label: "1 día", emoji: "⚡" },
-  { days: 3, label: "2-3 días", emoji: "📅" },
-  { days: 5, label: "4-5 días", emoji: "🗺️" },
-  { days: 7, label: "6-7 días", emoji: "🏆" },
-];
+import { useLanguage, useT, itinerariesEn } from "@/i18n";
 
 function ItinerariosContent() {
   const searchParams = useSearchParams();
   const diasParam = searchParams.get("dias");
   const selectedDays = diasParam ? parseInt(diasParam) : null;
+  const { lang } = useLanguage();
+  const t = useT(lang);
+
+  const dayOptions = [
+    { days: 1, label: t("page.itinerarios.1day"), emoji: "⚡" },
+    { days: 3, label: t("page.itinerarios.23days"), emoji: "📅" },
+    { days: 5, label: t("page.itinerarios.45days"), emoji: "🗺️" },
+    { days: 7, label: t("page.itinerarios.67days"), emoji: "🏆" },
+  ];
 
   const selectedItinerary = selectedDays
     ? itineraries.find((it) => it.days === selectedDays)
+    : null;
+
+  const enOverride = selectedItinerary && lang === "en"
+    ? itinerariesEn[selectedItinerary.id]
     : null;
 
   return (
@@ -32,11 +39,10 @@ function ItinerariosContent() {
         className="mb-8"
       >
         <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight mb-2">
-          📅 Itinerarios
+          {t("page.itinerarios.title")}
         </h1>
         <p className="text-muted2 leading-relaxed">
-          Planes sugeridos por tu anfitrión según cuántos días te quedes.
-          Adaptables al clima y tus intereses.
+          {t("page.itinerarios.desc")}
         </p>
       </motion.div>
 
@@ -67,10 +73,10 @@ function ItinerariosContent() {
         >
           <span className="text-5xl mb-4 block">🗓️</span>
           <h2 className="text-xl font-bold mb-2">
-            ¿Cuántos días te quedas?
+            {t("page.itinerarios.howMany")}
           </h2>
           <p className="text-sm text-muted2">
-            Selecciona arriba para ver un itinerario sugerido día a día
+            {t("page.itinerarios.selectAbove")}
           </p>
         </motion.div>
       )}
@@ -89,10 +95,10 @@ function ItinerariosContent() {
               <span className="text-3xl">{selectedItinerary.emoji}</span>
               <div>
                 <h2 className="text-lg font-extrabold">
-                  {selectedItinerary.label}
+                  {enOverride?.label ?? selectedItinerary.label}
                 </h2>
                 <p className="text-sm text-muted2">
-                  {selectedItinerary.description}
+                  {enOverride?.description ?? selectedItinerary.description}
                 </p>
               </div>
             </div>
@@ -100,15 +106,19 @@ function ItinerariosContent() {
 
           {/* Days */}
           {selectedItinerary.plan.map((day, i) => (
-            <ItineraryTimeline key={day.day} day={day} dayIndex={i} />
+            <ItineraryTimeline
+              key={day.day}
+              day={day}
+              dayIndex={i}
+              dayTitle={enOverride?.plan[i]?.title}
+              activityNotes={enOverride?.plan[i]?.notes}
+            />
           ))}
 
           {/* Nota */}
           <div className="glass-card p-4 text-center">
             <p className="text-xs text-muted2">
-              💡 Estos itinerarios son sugerencias — siéntanse libres de
-              adaptar según el clima, las ganas y el ritmo de cada día.
-              ¡Aprovechenlo al máximo!
+              {t("page.itinerarios.note")}
             </p>
           </div>
         </div>
@@ -122,7 +132,7 @@ export default function ItinerariosPage() {
     <Suspense
       fallback={
         <div className="max-w-3xl mx-auto px-4 py-8 text-center text-muted2">
-          Cargando itinerarios...
+          Loading...
         </div>
       }
     >

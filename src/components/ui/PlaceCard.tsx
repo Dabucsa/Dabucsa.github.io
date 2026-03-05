@@ -3,19 +3,27 @@
 import { motion } from "framer-motion";
 import { MapPin, Clock, DollarSign, Lightbulb } from "lucide-react";
 import type { Place } from "@/data/types";
+import { useLanguage, useT, placesEn } from "@/i18n";
 
 interface PlaceCardProps {
   place: Place;
   index?: number;
 }
 
-const profileLabels: Record<string, { label: string; color: string }> = {
-  familia: { label: "Familia", color: "badge-green" },
-  aventura: { label: "Aventura", color: "badge-orange" },
-  pareja: { label: "Pareja", color: "badge-violet" },
-};
-
 export default function PlaceCard({ place, index = 0 }: PlaceCardProps) {
+  const { lang } = useLanguage();
+  const t = useT(lang);
+  const en = lang === "en" ? placesEn[place.id] : undefined;
+  const description = en?.description ?? place.description;
+  const longDescription = en?.longDescription ?? place.longDescription;
+  const tip = en?.tip ?? place.tip;
+
+  const profileLabels: Record<string, { label: string; color: string }> = {
+    familia: { label: t("place.family"), color: "badge-green" },
+    aventura: { label: t("place.adventure"), color: "badge-orange" },
+    pareja: { label: t("place.couple"), color: "badge-violet" },
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -33,15 +41,15 @@ export default function PlaceCard({ place, index = 0 }: PlaceCardProps) {
             <h3 className="text-base font-bold text-foreground leading-tight">
               {place.name}
             </h3>
-            <p className="text-xs text-muted2 mt-0.5">{place.description}</p>
+            <p className="text-xs text-muted2 mt-0.5">{description}</p>
           </div>
         </div>
       </div>
 
       {/* Long description */}
-      {place.longDescription && (
+      {longDescription && (
         <p className="text-sm text-muted2 leading-relaxed">
-          {place.longDescription}
+          {longDescription}
         </p>
       )}
 
@@ -49,7 +57,7 @@ export default function PlaceCard({ place, index = 0 }: PlaceCardProps) {
       <div className="flex flex-wrap items-center gap-2 text-xs">
         <span className="flex items-center gap-1 text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 rounded-md px-2 py-1 font-semibold">
           <DollarSign size={12} />
-          {place.price}{/\d/.test(place.price) && <span className="text-[10px] font-normal text-emerald-400/60 ml-0.5">(aprox.)</span>}
+          {place.price}{/\d/.test(place.price) && <span className="text-[10px] font-normal text-emerald-400/60 ml-0.5">({t("place.approx")})</span>}
         </span>
         <span className="flex items-center gap-1 text-muted2 bg-card-hover rounded-md px-2 py-1">
           <Clock size={12} />
@@ -62,7 +70,7 @@ export default function PlaceCard({ place, index = 0 }: PlaceCardProps) {
           className="flex items-center gap-1 text-sky-400 bg-sky-500/10 border border-sky-500/20 rounded-md px-2 py-1 font-semibold hover:bg-sky-500/20 transition-colors"
         >
           <MapPin size={12} />
-          Ver mapa
+          {t("place.seeMap")}
         </a>
       </div>
 
@@ -74,20 +82,20 @@ export default function PlaceCard({ place, index = 0 }: PlaceCardProps) {
           </span>
         ))}
         {place.weather === "indoor" && (
-          <span className="badge badge-blue">🏠 Bajo techo</span>
+          <span className="badge badge-blue">🏠 {t("place.indoor")}</span>
         )}
       </div>
 
       {/* Tip del anfitrión */}
-      {place.tip && (
+      {tip && (
         <div className="mt-1 p-3 bg-emerald-500/5 border border-emerald-500/15 rounded-xl">
           <div className="flex items-start gap-2">
             <Lightbulb size={14} className="text-emerald-400 mt-0.5 shrink-0" />
             <p className="text-xs text-muted2 leading-relaxed">
               <span className="font-semibold text-emerald-400">
-                Tip del anfitrión:{" "}
+                {t("place.hostTip")}:{" "}
               </span>
-              {place.tip}
+              {tip}
             </p>
           </div>
         </div>

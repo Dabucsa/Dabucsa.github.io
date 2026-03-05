@@ -3,9 +3,12 @@
 import { motion } from "framer-motion";
 import { getPlacesByCategory } from "@/data/places";
 import PlaceCard from "@/components/ui/PlaceCard";
+import { useLanguage, useT } from "@/i18n";
 
 export default function NaturalezaPage() {
   const places = getPlacesByCategory("naturaleza");
+  const { lang } = useLanguage();
+  const t = useT(lang);
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-8">
@@ -15,12 +18,10 @@ export default function NaturalezaPage() {
         className="mb-8"
       >
         <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight mb-2">
-          🌲 Naturaleza
+          {t("page.naturaleza.title")}
         </h1>
         <p className="text-muted2 leading-relaxed">
-          Bosques milenarios de araucarias, lagos cristalinos, playas
-          volcánicas y senderos que quitan el aliento. Lo mejor de la
-          naturaleza del sur.
+          {t("page.naturaleza.desc")}
         </p>
       </motion.div>
 
@@ -35,12 +36,10 @@ export default function NaturalezaPage() {
           <span className="text-2xl">🌲</span>
           <div>
             <h2 className="text-sm font-bold mb-1">
-              El imperdible: Parque Huerquehue
+              {t("page.naturaleza.highlight.title")}
             </h2>
             <p className="text-xs text-muted2 leading-relaxed">
-              Si solo tienen tiempo para un trekking, que sea el sendero Los
-              Lagos en Huerquehue. Araucarias milenarias, tres lagunas
-              cristalinas y vistas al volcán. ~4-6 horas ida y vuelta.
+              {t("page.naturaleza.highlight.desc")}
             </p>
           </div>
         </div>

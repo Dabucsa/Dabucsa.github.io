@@ -4,16 +4,24 @@ import { motion } from "framer-motion";
 import { MapPin, Clock } from "lucide-react";
 import { getPlaceById } from "@/data/places";
 import type { ItineraryDay } from "@/data/types";
+import { useLanguage, useT, placesEn } from "@/i18n";
 
 interface ItineraryTimelineProps {
   day: ItineraryDay;
   dayIndex: number;
+  dayTitle?: string;
+  activityNotes?: (string | undefined)[];
 }
 
 export default function ItineraryTimeline({
   day,
   dayIndex,
+  dayTitle,
+  activityNotes,
 }: ItineraryTimelineProps) {
+  const { lang } = useLanguage();
+  const t = useT(lang);
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -25,10 +33,10 @@ export default function ItineraryTimeline({
       <div className="px-5 py-4 border-b border-border bg-gradient-to-r from-emerald-500/8 to-transparent">
         <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-emerald-400 mb-1">
           <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_6px_theme(colors.emerald.400)]" />
-          Día {day.day}
+          {t("timeline.day")} {day.day}
         </div>
         <h3 className="text-lg font-extrabold tracking-tight">
-          {day.title}
+          {dayTitle ?? day.title}
         </h3>
       </div>
 
@@ -37,6 +45,8 @@ export default function ItineraryTimeline({
         {day.activities.map((activity, i) => {
           const place = getPlaceById(activity.placeId);
           if (!place) return null;
+          const en = lang === "en" ? placesEn[place.id] : undefined;
+          const noteText = activityNotes?.[i] ?? activity.note ?? (en?.description ?? place.description);
 
           return (
             <motion.div
@@ -67,11 +77,11 @@ export default function ItineraryTimeline({
                   {place.name}
                 </h4>
                 <p className="text-xs text-muted2 mt-1 leading-relaxed">
-                  {activity.note || place.description}
+                  {noteText}
                 </p>
                 <div className="flex items-center gap-2 mt-2 flex-wrap">
                   <span className="text-[11px] font-bold text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 rounded-md px-2 py-0.5">
-                    {place.price}{/\d/.test(place.price) && <span className="text-[9px] font-normal text-emerald-400/60 ml-0.5">(aprox.)</span>}
+                    {place.price}{/\d/.test(place.price) && <span className="text-[9px] font-normal text-emerald-400/60 ml-0.5">({t("place.approx")})</span>}
                   </span>
                   <span className="text-[11px] text-muted2 flex items-center gap-1">
                     <Clock size={10} />
@@ -84,7 +94,7 @@ export default function ItineraryTimeline({
                     className="text-[11px] font-bold text-sky-400 bg-sky-500/10 border border-sky-500/20 rounded-md px-2 py-0.5 hover:bg-sky-500/20 transition-colors flex items-center gap-1"
                   >
                     <MapPin size={10} />
-                    Mapa
+                    {t("timeline.map")}
                   </a>
                 </div>
               </div>
