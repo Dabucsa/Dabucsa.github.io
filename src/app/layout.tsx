@@ -2,12 +2,10 @@ import type { Metadata } from "next";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import Providers from "@/components/Providers";
-import { getServerLang } from "@/i18n/server";
 import "./globals.css";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const lang = await getServerLang();
-  const isSpanish = lang === "es";
+  const isSpanish = true; // Static export — default to Spanish; client toggles language dynamically
 
   return {
     metadataBase: new URL("https://pucontour.zeroaustral.cl"),
@@ -71,15 +69,13 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const lang = await getServerLang();
-
   return (
-    <html lang={lang}>
+    <html lang="es">
       <body className="antialiased">
         {/* Animated background */}
         <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none">
@@ -97,7 +93,7 @@ export default async function RootLayout({
           />
         </div>
 
-        <Providers initialLang={lang}>
+        <Providers initialLang="es">
           <div className="relative z-10 min-h-screen flex flex-col">
             <Header />
             <main className="flex-1">{children}</main>

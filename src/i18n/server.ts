@@ -1,9 +1,10 @@
-import { cookies } from "next/headers";
 import type { Lang } from "./translations";
-import { LANG_COOKIE_KEY, isLang } from "./config";
 
+/**
+ * For static export, always return the default language.
+ * Client-side language switching is handled entirely by the LanguageProvider
+ * (React Context + localStorage). Metadata is statically generated in Spanish.
+ */
 export async function getServerLang(): Promise<Lang> {
-  const cookieStore = await cookies();
-  const lang = cookieStore.get(LANG_COOKIE_KEY)?.value;
-  return isLang(lang) ? lang : "es";
+  return "es";
 }
