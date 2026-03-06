@@ -3,7 +3,7 @@
 
 export const placesEn: Record<
   string,
-  { description?: string; longDescription?: string; tip?: string }
+  { name?: string; description?: string; longDescription?: string; tip?: string }
 > = {
   // ─── RESTAURANTES ───
   "la-maga": {
@@ -48,6 +48,13 @@ export const placesEn: Record<
       "Character-filled café in downtown Pucón. Specialty coffee, artisan pastries, brunch with eggs benedict and sourdough toast. Warm ambiance with vintage décor.",
     tip: "The weekend brunch is a must. Great coffee and amazing raspberry kuchen.",
   },
+  "cafe-amankay": {
+    name: "Cafe Amankay",
+    description: "Garden café on the road to Caburgua, ideal for brunch or a calmer stop",
+    longDescription:
+      "Garden café in the Metreñehue area on the international road. Works especially well as a late breakfast or brunch before heading toward Caburgua, hot springs, or longer outings east of Pucón.",
+    tip: "It makes a lot of sense if you're going toward Caburgua that day or want to leave downtown early without rushing breakfast.",
+  },
   "da-alessandro": {
     description: "Classic pizzeria with wood-fired oven & homemade pasta",
     longDescription:
@@ -59,12 +66,6 @@ export const placesEn: Record<
     longDescription:
       "Unique gastronomic experience with modern Mapuche cuisine. Local ingredients: pine nuts, merkén, nalca, wild mushrooms. Intimate setting with native wood décor.",
     tip: "The tasting menu is worth every penny. Book at least a day in advance.",
-  },
-  nepal: {
-    description: "Author cuisine with Asian influences, warm atmosphere",
-    longDescription:
-      "Renowned Pucón restaurant with author cuisine and Asian influences. Bold flavors, good wine list, and cozy atmosphere with warm décor.",
-    tip: "Booking is key in peak season. The curry and wok dishes are unmissable.",
   },
   "trattoria-di-pietro": {
     description: "Homestyle Italian cooking, fresh pasta & family atmosphere",

@@ -14,7 +14,9 @@ export const places: Place[] = [
     price: "$$",
     duration: "1-2 hrs",
     emoji: "🍝",
-    mapUrl: "https://www.google.com/maps/search/?api=1&query=Restaurante+La+Maga+Pucon+Chile",
+    mapUrl: "https://www.google.com/maps/search/?api=1&query=Geronimo+de+Alderete+276+Pucon+Chile",
+    address: "Geronimo de Alderete 276, Pucón",
+    mapConfidence: "verified",
     tip: "Pidan la tabla de entrada para compartir y reserven terraza con anticipación en temporada alta.",
     bestFor: ["familia", "pareja"],
     weather: "both",
@@ -29,7 +31,9 @@ export const places: Place[] = [
     price: "$$",
     duration: "1 hr",
     emoji: "🍕",
-    mapUrl: "https://www.google.com/maps/search/?api=1&query=Pizza+Cala+Pucon+Chile",
+    mapUrl: "https://www.google.com/maps/search/?api=1&query=Lincoyan+361+Pucon+Chile",
+    address: "Lincoyán 361, Pucón",
+    mapConfidence: "verified",
     tip: "La pizza de burrata con tomates cherry no tiene comparación. Lleguen temprano porque se llena.",
     bestFor: ["familia", "aventura"],
     weather: "indoor",
@@ -44,7 +48,9 @@ export const places: Place[] = [
     price: "$$",
     duration: "1-1.5 hrs",
     emoji: "🔥",
-    mapUrl: "https://www.google.com/maps/search/?api=1&query=By+Roots+Pucon+Chile",
+    mapUrl: "https://www.google.com/maps/search/?api=1&query=General+Urrutia+71+Pucon+Chile",
+    address: "General Urrutia 71, Pucón",
+    mapConfidence: "verified",
     tip: "Las costillas ahumadas son el plato estrella. Vayan con hambre porque las porciones son generosas.",
     bestFor: ["pareja", "aventura"],
     weather: "indoor",
@@ -74,7 +80,9 @@ export const places: Place[] = [
     price: "$$",
     duration: "1-2 hrs",
     emoji: "🧆",
-    mapUrl: "https://www.google.com/maps/search/?api=1&query=Banus+Restaurante+Pucon+Chile",
+    mapUrl: "https://www.google.com/maps/search/?api=1&query=General+Urrutia+61+Pucon+Chile",
+    address: "General Urrutia 61, Pucón",
+    mapConfidence: "verified",
     tip: "El mezze para compartir es espectacular. Buenos cócteles al atardecer.",
     bestFor: ["pareja", "aventura"],
     weather: "both",
@@ -89,7 +97,9 @@ export const places: Place[] = [
     price: "$$$",
     duration: "2 hrs",
     emoji: "🍷",
-    mapUrl: "https://www.google.com/maps/search/?api=1&query=Cassis+Restaurante+Pucon+Chile",
+    mapUrl: "https://www.google.com/maps/search/?api=1&query=Fresia+223+Pucon+Chile",
+    address: "Fresia 223, Pucón",
+    mapConfidence: "verified",
     tip: "Reserven, especialmente en temporada alta. El menú degustación con maridaje es una experiencia.",
     bestFor: ["pareja"],
     weather: "indoor",
@@ -104,10 +114,29 @@ export const places: Place[] = [
     price: "$",
     duration: "1 hr",
     emoji: "☕",
-    mapUrl: "https://www.google.com/maps/search/?api=1&query=Cafe+de+la+P+Pucon+Chile",
+    mapUrl: "https://www.google.com/maps/search/?api=1&query=Lincoyan+395+Pucon+Chile",
+    address: "Lincoyán 395, Pucón",
+    mapConfidence: "verified",
     tip: "El brunch del fin de semana es imperdible. Buen café y muy buen kuchen de frambuesa.",
     bestFor: ["familia", "pareja"],
     weather: "indoor",
+  },
+  {
+    id: "cafe-amankay",
+    name: "Cafe Amankay",
+    category: "restaurantes",
+    description: "Cafetería-jardín camino a Caburgua, ideal para brunch o parada tranquila",
+    longDescription:
+      "Cafetería y jardín en el sector de Metreñehue, camino internacional. Funciona muy bien como desayuno tardío o brunch antes de seguir a Caburgua, termas o salidas más largas hacia el este de Pucón.",
+    price: "$$",
+    duration: "45 min - 1.5 hrs",
+    emoji: "☕",
+    mapUrl: "https://www.google.com/maps/search/?api=1&query=Camino+a+Caburgua+Km+15+Pucon+Chile",
+    address: "Camino a Caburgua Km 15, Pucón",
+    mapConfidence: "verified",
+    tip: "Tiene mucho sentido si ese día van hacia Caburgua o quieren salir del centro temprano sin desayunar apurados.",
+    bestFor: ["familia", "pareja"],
+    weather: "both",
   },
   {
     id: "da-alessandro",
@@ -134,27 +163,13 @@ export const places: Place[] = [
     price: "$$$",
     duration: "2 hrs",
     emoji: "🌿",
-    mapUrl: "https://www.google.com/maps/search/?api=1&query=Trawen+Restaurante+Pucon+Chile",
+    mapUrl: "https://www.google.com/maps/search/?api=1&query=Avenida+Bernardo+O%27Higgins+311+Local+5+Pucon+Chile",
+    address: "Av. Bernardo O'Higgins 311, Local 5, Pucón",
+    mapConfidence: "verified",
     tip: "El menú degustación vale cada peso. Reserven con al menos un día de anticipación.",
     bestFor: ["pareja"],
     weather: "indoor",
   },
-  {
-    id: "nepal",
-    name: "Nepal",
-    category: "restaurantes",
-    description: "Cocina de autor con influencias asiáticas, ambiente cálido",
-    longDescription:
-      "Restaurante reconocido en Pucón con cocina de autor e influencias asiáticas. Sabores intensos, buena carta de vinos y ambiente acogedor con decoración cálida.",
-    price: "$$$",
-    duration: "2 hrs",
-    emoji: "🍜",
-    mapUrl: "https://www.google.com/maps/search/?api=1&query=Nepal+Restaurante+Pucon+Chile",
-    tip: "Reservar es clave en temporada alta. Los platos de curry y wok son imperdibles.",
-    bestFor: ["pareja"],
-    weather: "indoor",
-  },
-
   {
     id: "trattoria-di-pietro",
     name: "Trattoria di Pietro",
@@ -165,7 +180,9 @@ export const places: Place[] = [
     price: "$$",
     duration: "1-1.5 hrs",
     emoji: "🇮🇹",
-    mapUrl: "https://www.google.com/maps/search/?api=1&query=Trattoria+di+Pietro+Pucon+Chile",
+    mapUrl: "https://www.google.com/maps/search/?api=1&query=Avenida+Bernardo+O%27Higgins+717+Local+4+Pucon+Chile",
+    address: "Av. Bernardo O'Higgins 717, Local 4, Pucón",
+    mapConfidence: "verified",
     tip: "Las pastas caseras son el fuerte. Reserven en temporada alta porque es chico y se llena.",
     bestFor: ["familia", "pareja"],
     weather: "indoor",
@@ -772,8 +789,12 @@ export const places: Place[] = [
   },
 ];
 
+export const placesById: Record<string, Place> = Object.fromEntries(
+  places.map((place) => [place.id, place])
+);
+
 export function getPlaceById(id: string): Place | undefined {
-  return places.find((p) => p.id === id);
+  return placesById[id];
 }
 
 export function getPlacesByCategory(category: string): Place[] {

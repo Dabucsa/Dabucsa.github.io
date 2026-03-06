@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { MapPin, Clock } from "lucide-react";
-import { getPlaceById } from "@/data/places";
+import { placesById } from "@/data/places";
 import type { ItineraryDay } from "@/data/types";
 import { useLanguage, useT, placesEn } from "@/i18n";
 
@@ -43,10 +43,18 @@ export default function ItineraryTimeline({
       {/* Timeline items */}
       <div className="py-2">
         {day.activities.map((activity, i) => {
-          const place = getPlaceById(activity.placeId);
+          const place = placesById[activity.placeId];
           if (!place) return null;
           const en = lang === "en" ? placesEn[place.id] : undefined;
-          const noteText = activityNotes?.[i] ?? activity.note ?? (en?.description ?? place.description);
+          const placeName = en?.name ?? place.name;
+          const noteText = activityNotes?.[i]
+            ?? (lang === "en" ? en?.description : activity.note)
+            ?? activity.note
+            ?? en?.description
+            ?? place.description;
+          const mapActionLabel = place.mapConfidence === "verified"
+            ? t("timeline.openMap")
+            : t("timeline.searchMap");
 
           return (
             <motion.div
@@ -74,7 +82,7 @@ export default function ItineraryTimeline({
               {/* Content */}
               <div className="flex-1 min-w-0">
                 <h4 className="text-sm font-bold text-foreground leading-tight">
-                  {place.name}
+                  {placeName}
                 </h4>
                 <p className="text-xs text-muted2 mt-1 leading-relaxed">
                   {noteText}
@@ -94,7 +102,7 @@ export default function ItineraryTimeline({
                     className="text-[11px] font-bold text-sky-400 bg-sky-500/10 border border-sky-500/20 rounded-md px-2 py-0.5 hover:bg-sky-500/20 transition-colors flex items-center gap-1"
                   >
                     <MapPin size={10} />
-                    {t("timeline.map")}
+                    {mapActionLabel}
                   </a>
                 </div>
               </div>

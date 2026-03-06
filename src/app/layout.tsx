@@ -1,73 +1,86 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import Providers from "@/components/Providers";
+import { getServerLang } from "@/i18n/server";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
+export async function generateMetadata(): Promise<Metadata> {
+  const lang = await getServerLang();
+  const isSpanish = lang === "es";
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
-export const metadata: Metadata = {
-  metadataBase: new URL("https://pucontour.zeroaustral.cl"),
-  title: {
-    default: "Descubre Pucón — Guía Turística para Huéspedes",
-    template: "%s | Descubre Pucón",
-  },
-  description:
-    "Tu guía completa para explorar Pucón y alrededores. Restaurantes, termas, aventura, naturaleza y cultura. Itinerarios de 1 a 7 días.",
-  keywords: [
-    "pucón turismo",
-    "que hacer en pucón",
-    "termas pucón",
-    "restaurantes pucón",
-    "volcán villarrica",
-    "itinerario pucón",
-    "guía pucón",
-    "pucón andino",
-    "lago villarrica",
-  ],
-  authors: [{ name: "Pucón Andino", url: "https://pucontour.zeroaustral.cl" }],
-  creator: "Pucón Andino & ZeroAustral",
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
+  return {
+    metadataBase: new URL("https://pucontour.zeroaustral.cl"),
+    title: {
+      default: isSpanish
+        ? "Descubre Pucón — Guía Turística para Huéspedes"
+        : "Discover Pucón — Guest Travel Guide",
+      template: isSpanish ? "%s | Descubre Pucón" : "%s | Discover Pucón",
+    },
+    description: isSpanish
+      ? "Tu guía completa para explorar Pucón y alrededores. Restaurantes, termas, aventura, naturaleza y cultura con criterio práctico."
+      : "Your complete guide to exploring Pucón and the surrounding area. Restaurants, hot springs, adventure, nature, and culture with practical guidance.",
+    keywords: isSpanish
+      ? [
+          "pucón turismo",
+          "que hacer en pucón",
+          "termas pucón",
+          "restaurantes pucón",
+          "volcán villarrica",
+          "itinerario pucón",
+          "guía pucón",
+          "pucón andino",
+          "lago villarrica",
+        ]
+      : [
+          "pucon travel",
+          "what to do in pucon",
+          "pucon hot springs",
+          "pucon restaurants",
+          "villarrica volcano",
+          "pucon itinerary",
+          "pucon guide",
+          "southern chile travel",
+          "villarrica lake",
+        ],
+    authors: [{ name: "Pucón Andino", url: "https://pucontour.zeroaustral.cl" }],
+    creator: "Pucón Andino & ZeroAustral",
+    robots: {
       index: true,
       follow: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1,
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-video-preview": -1,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+      },
     },
-  },
-  openGraph: {
-    type: "website",
-    locale: "es_CL",
-    url: "https://pucontour.zeroaustral.cl",
-    siteName: "Descubre Pucón",
-    title: "Descubre Pucón — Guía Turística para Huéspedes",
-    description:
-      "Restaurantes, termas, aventura, naturaleza y cultura en Pucón. Itinerarios de 1 a 7 días.",
-  },
-};
+    openGraph: {
+      type: "website",
+      locale: isSpanish ? "es_CL" : "en_US",
+      url: "https://pucontour.zeroaustral.cl",
+      siteName: isSpanish ? "Descubre Pucón" : "Discover Pucón",
+      title: isSpanish
+        ? "Descubre Pucón — Guía Turística para Huéspedes"
+        : "Discover Pucón — Guest Travel Guide",
+      description: isSpanish
+        ? "Restaurantes, termas, aventura, naturaleza y cultura en Pucón. Itinerarios de 1 a 7 días."
+        : "Restaurants, hot springs, adventure, nature, and culture in Pucón. Itineraries from 1 to 7 days.",
+    },
+  };
+}
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const lang = await getServerLang();
+
   return (
-    <html lang="es">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+    <html lang={lang}>
+      <body className="antialiased">
         {/* Animated background */}
         <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none">
           <div
@@ -84,7 +97,7 @@ export default function RootLayout({
           />
         </div>
 
-        <Providers>
+        <Providers initialLang={lang}>
           <div className="relative z-10 min-h-screen flex flex-col">
             <Header />
             <main className="flex-1">{children}</main>

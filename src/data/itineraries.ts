@@ -151,12 +151,12 @@ export const itineraries: Itinerary[] = [
         day: 4,
         title: "Caburgua & Cultura",
         activities: [
-          { time: "09:00", placeId: "cafe-de-la-p", note: "Brunch tranquilo" },
+          { time: "09:00", placeId: "cafe-amankay", note: "Brunch tranquilo camino a Caburgua" },
           { time: "10:30", placeId: "lago-caburgua", note: "Playas turquesas y relax" },
           { time: "12:00", placeId: "ojos-caburgua", note: "Cascadas impresionantes" },
           { time: "14:00", placeId: "clase-cocina-mapuche", note: "Aprender cocina ancestral" },
           { time: "18:00", placeId: "termas-menetue", note: "Termas al atardecer" },
-          { time: "21:00", placeId: "nepal", note: "Cena especial" },
+          { time: "21:00", placeId: "cassis", note: "Cena especial" },
         ],
       },
       {
@@ -205,7 +205,7 @@ export const itineraries: Itinerary[] = [
         day: 3,
         title: "Lago Caburgua",
         activities: [
-          { time: "09:00", placeId: "cafe-de-la-p", note: "Brunch tranquilo" },
+          { time: "09:00", placeId: "cafe-amankay", note: "Brunch tranquilo camino a Caburgua" },
           { time: "10:30", placeId: "ojos-caburgua", note: "Cascadas mágicas" },
           { time: "12:30", placeId: "lago-caburgua", note: "Día de playa turquesa" },
           { time: "17:00", placeId: "termas-menetue", note: "Termas por la tarde" },
@@ -220,7 +220,7 @@ export const itineraries: Itinerary[] = [
           { time: "12:30", placeId: "cerveceria-artesanal", note: "Almuerzo merecido" },
           { time: "14:30", placeId: "kayak-lago", note: "Kayak al atardecer" },
           { time: "18:00", placeId: "termas-huife", note: "Spa premium" },
-          { time: "21:00", placeId: "nepal", note: "Cena romántica" },
+          { time: "21:00", placeId: "trawen", note: "Cena romántica" },
         ],
       },
       {

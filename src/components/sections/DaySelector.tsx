@@ -22,7 +22,7 @@ export default function DaySelector({ itineraries }: DaySelectorProps) {
   ];
 
   return (
-    <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+    <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
       {dayOptions.map((option, i) => {
         const itinerary = itineraries.find((it) => it.days === option.days);
         return (
@@ -34,7 +34,7 @@ export default function DaySelector({ itineraries }: DaySelectorProps) {
           >
             <Link
               href={`/itinerarios?dias=${option.days}`}
-              className="glass-card p-5 flex flex-col items-center gap-2 text-center group hover:-translate-y-1 transition-transform block"
+              className="glass-card block min-h-32 p-4 sm:p-5 flex flex-col items-center justify-center gap-2 text-center group hover:-translate-y-1 transition-transform"
             >
               <span className="text-3xl group-hover:scale-110 transition-transform">
                 {option.emoji}

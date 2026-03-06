@@ -8,6 +8,7 @@ export type Category =
 
 export type ProfileType = "familia" | "aventura" | "pareja";
 export type Weather = "indoor" | "outdoor" | "both";
+export type MapConfidence = "verified" | "search";
 
 export interface Place {
   id: string;
@@ -19,6 +20,8 @@ export interface Place {
   duration: string;
   emoji: string;
   mapUrl: string;
+  address?: string;
+  mapConfidence?: MapConfidence;
   tip?: string;
   bestFor: ProfileType[];
   weather: Weather;

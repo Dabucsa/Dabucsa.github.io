@@ -2,16 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import {
-  Cloud,
-  CloudRain,
-  CloudSnow,
-  CloudSun,
-  Droplets,
-  Sun,
-  Thermometer,
-  Wind,
-} from "lucide-react";
+import { Droplets, Thermometer, Wind } from "lucide-react";
 import { useLanguage, useT } from "@/i18n";
 import type { Lang } from "@/i18n";
 
@@ -64,16 +55,6 @@ function getWeatherInfo(code: number, lang: Lang) {
   return { label: entry[lang], icon: entry.icon };
 }
 
-function getWeatherIcon(code: number, size: number) {
-  if (code <= 1) return <Sun size={size} className="text-yellow-400" />;
-  if (code <= 3) return <CloudSun size={size} className="text-sky-300" />;
-  if (code <= 48) return <Cloud size={size} className="text-zinc-400" />;
-  if (code <= 67) return <CloudRain size={size} className="text-sky-400" />;
-  if (code <= 77) return <CloudSnow size={size} className="text-blue-300" />;
-  if (code <= 82) return <CloudRain size={size} className="text-sky-400" />;
-  return <CloudRain size={size} className="text-violet-400" />;
-}
-
 function getDayName(dateStr: string, lang: Lang, t: (key: string) => string) {
   const d = new Date(dateStr + "T12:00:00");
   const today = new Date();
@@ -89,6 +70,25 @@ function getDayName(dateStr: string, lang: Lang, t: (key: string) => string) {
 // Pucón coordinates: -39.27, -71.97
 const PUCON_LAT = -39.27;
 const PUCON_LON = -71.97;
+const TEMP_UNIT_STORAGE_KEY = "pucontour-temp-unit";
+
+type TempUnit = "c" | "f";
+
+function isTempUnit(value: string | null): value is TempUnit {
+  return value === "c" || value === "f";
+}
+
+function toFahrenheit(celsius: number) {
+  return Math.round((celsius * 9) / 5 + 32);
+}
+
+function formatTemperature(valueInCelsius: number, unit: TempUnit) {
+  if (unit === "f") {
+    return `${toFahrenheit(valueInCelsius)}°F`;
+  }
+
+  return `${valueInCelsius}°C`;
+}
 
 export default function WeatherWidget() {
   const [weather, setWeather] = useState<WeatherData | null>(null);
@@ -96,6 +96,21 @@ export default function WeatherWidget() {
   const [error, setError] = useState(false);
   const { lang } = useLanguage();
   const t = useT(lang);
+  const [tempUnit, setTempUnit] = useState<TempUnit>("c");
+
+  useEffect(() => {
+    const storedUnit = window.localStorage.getItem(TEMP_UNIT_STORAGE_KEY);
+    if (isTempUnit(storedUnit)) {
+      setTempUnit(storedUnit);
+      return;
+    }
+
+    setTempUnit(lang === "en" ? "f" : "c");
+  }, [lang]);
+
+  useEffect(() => {
+    window.localStorage.setItem(TEMP_UNIT_STORAGE_KEY, tempUnit);
+  }, [tempUnit]);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -107,7 +122,7 @@ export default function WeatherWidget() {
         );
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const data = await res.json();
-        if (!data?.current?.temperature_2m) throw new Error("Invalid data");
+        if (data?.current?.temperature_2m == null) throw new Error("Invalid data");
         setWeather({
           temperature: Math.round(data.current.temperature_2m),
           apparentTemperature: Math.round(data.current.apparent_temperature),
@@ -162,35 +177,63 @@ export default function WeatherWidget() {
       className="glass-card overflow-hidden"
     >
       {/* Current weather */}
-      <div className="p-5">
-        <div className="flex items-center gap-2 mb-4">
-          <Thermometer size={16} className="text-emerald-400" />
-          <span className="text-xs font-bold uppercase tracking-widest text-muted">
-            {t("weather.title")}
-          </span>
+      <div className="p-4 sm:p-5">
+        <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex items-center gap-2">
+            <Thermometer size={16} className="text-emerald-400" />
+            <span className="text-xs font-bold uppercase tracking-widest text-muted">
+              {t("weather.title")}
+            </span>
+          </div>
+
+          <div
+            className="inline-flex w-fit rounded-full border border-border bg-card-hover/70 p-1"
+            role="group"
+            aria-label={t("weather.unitLabel")}
+          >
+            {(["c", "f"] as const).map((unit) => {
+              const active = tempUnit === unit;
+              return (
+                <button
+                  key={unit}
+                  type="button"
+                  onClick={() => setTempUnit(unit)}
+                  className={`rounded-full px-2.5 py-1 text-xs font-semibold transition ${
+                    active
+                      ? "bg-emerald-500 text-black"
+                      : "text-muted2 hover:text-foreground"
+                  }`}
+                  aria-pressed={active}
+                >
+                  °{unit.toUpperCase()}
+                </button>
+              );
+            })}
+          </div>
         </div>
 
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-center gap-4">
-            <div className="text-5xl">{current.icon}</div>
+            <div className="text-5xl sm:text-6xl">{current.icon}</div>
             <div>
-              <div className="text-3xl font-extrabold tracking-tight">
-                {weather.temperature}°C
+              <div className="text-4xl sm:text-5xl font-extrabold tracking-tight">
+                {formatTemperature(weather.temperature, tempUnit)}
               </div>
-              <div className="text-sm text-muted2">{current.label}</div>
-              <div className="text-xs text-muted mt-0.5">
-                {t("weather.feelsLike")} {weather.apparentTemperature}°C
+              <div className="text-base text-muted2">{current.label}</div>
+              <div className="text-sm text-muted mt-0.5">
+                {t("weather.feelsLike")}{" "}
+                {formatTemperature(weather.apparentTemperature, tempUnit)}
               </div>
             </div>
           </div>
 
-          <div className="flex flex-col gap-2 text-sm text-muted2">
+          <div className="grid grid-cols-2 gap-3 sm:flex sm:flex-col sm:gap-2 text-sm sm:text-base text-muted2">
             <div className="flex items-center gap-1.5">
-              <Droplets size={14} className="text-sky-400" />
+              <Droplets size={16} className="text-sky-400" />
               {weather.humidity}%
             </div>
             <div className="flex items-center gap-1.5">
-              <Wind size={14} className="text-emerald-400" />
+              <Wind size={16} className="text-emerald-400" />
               {weather.windSpeed} km/h
             </div>
           </div>
@@ -198,26 +241,25 @@ export default function WeatherWidget() {
       </div>
 
       {/* 5-day forecast */}
-      <div className="border-t border-border px-5 py-4">
-        <div className="grid grid-cols-5 gap-2">
+      <div className="border-t border-border px-3 sm:px-5 py-4">
+        <div className="-mx-1 flex gap-2 overflow-x-auto px-1 pb-1 sm:mx-0 sm:grid sm:grid-cols-5 sm:gap-3 sm:overflow-visible sm:px-0 sm:pb-0">
           {weather.daily.date.map((date, i) => {
             const dayInfo = getWeatherInfo(weather.daily.weatherCode[i], lang);
             return (
               <div
                 key={date}
-                className="flex flex-col items-center gap-1 text-center"
+                className="flex min-w-[84px] shrink-0 flex-col items-center gap-1.5 rounded-xl bg-card-hover/60 px-2 py-2 text-center sm:min-w-0"
               >
-                <span className="text-xs font-semibold text-muted2 uppercase">
+                <span className="text-[11px] sm:text-xs font-semibold text-muted2 uppercase">
                   {getDayName(date, lang, t)}
                 </span>
-                <span className="text-xl">{dayInfo.icon}</span>
-                <div className="text-xs">
-                  <span className="font-bold text-foreground">
-                    {weather.daily.tempMax[i]}°
+                <span className="text-2xl sm:text-[28px] leading-none">{dayInfo.icon}</span>
+                <div className="flex flex-col items-center gap-0.5 leading-none sm:gap-0">
+                  <span className="font-extrabold text-foreground">
+                    {formatTemperature(weather.daily.tempMax[i], tempUnit)}
                   </span>
-                  <span className="text-muted mx-0.5">/</span>
-                  <span className="text-muted">
-                    {weather.daily.tempMin[i]}°
+                  <span className="text-muted2 font-medium">
+                    {formatTemperature(weather.daily.tempMin[i], tempUnit)}
                   </span>
                 </div>
               </div>

@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { ArrowUpRight } from "lucide-react";
 import type { CategoryInfo } from "@/data/types";
 import { useLanguage, useT } from "@/i18n";
 
@@ -29,17 +30,23 @@ export default function CategoryCard({
     >
       <Link
         href={`/${category.slug}`}
-        className="glass-card p-5 flex flex-col gap-2 group block hover:-translate-y-1 transition-transform"
+        className="glass-card p-4 sm:p-5 flex flex-col gap-3 group block hover:-translate-y-1 transition-transform"
       >
-        <div className="w-14 h-14 rounded-2xl bg-card-hover border border-border flex items-center justify-center text-3xl group-hover:scale-110 transition-transform">
-          {category.emoji}
+        <div className="flex items-start justify-between gap-3">
+          <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-card-hover border border-border flex items-center justify-center text-2xl sm:text-3xl group-hover:scale-110 transition-transform">
+            {category.emoji}
+          </div>
+          <span className="inline-flex items-center gap-1 rounded-full border border-border bg-card-hover px-2.5 py-1 text-[11px] text-muted2">
+            {count} {count === 1 ? t("card.place") : t("card.places")}
+          </span>
         </div>
         <h3 className="text-base font-bold text-foreground">{name}</h3>
-        <p className="text-xs text-muted2 leading-relaxed">
+        <p className="text-sm text-muted2 leading-relaxed">
           {description}
         </p>
-        <span className="text-[11px] text-muted font-medium">
-          {count} {count === 1 ? t("card.place") : t("card.places")} →
+        <span className="mt-auto inline-flex items-center gap-1.5 text-sm font-semibold text-foreground">
+          {t("card.explore")}
+          <ArrowUpRight size={14} className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
         </span>
       </Link>
     </motion.div>
