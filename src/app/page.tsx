@@ -218,22 +218,22 @@ export default function Home() {
                 </a>
               </div>
               <div className="flex flex-col gap-3">
-                {/* TODO: validar cifras y fuente con el cliente antes de publicar */}
+                {/* Fuente: SNA, 2° Barómetro de Robo Agrícola (feb 2026) */}
                 <div className="rounded-md bg-primary-container p-5">
                   <div className="flex items-baseline justify-between gap-2">
-                    <span className="font-display text-4xl font-bold whitespace-nowrap text-amber">79%</span>
-                    <span className="text-[11px] font-bold uppercase tracking-[0.08em] text-white/60">Reporte SNA / Socabio</span>
+                    <span className="font-display text-4xl font-bold whitespace-nowrap text-amber">77%</span>
+                    <span className="text-[11px] font-bold uppercase tracking-[0.08em] text-white/60">SNA · Barómetro 2026</span>
                   </div>
-                  <p className="mt-1 font-bold uppercase">de los agricultores ha sido víctima de delitos</p>
-                  <p className="text-sm text-white/70">Robos y daños en predios agrícolas.</p>
+                  <p className="mt-1 font-bold uppercase">de los agricultores fue víctima de robo</p>
+                  <p className="text-sm text-white/70">En los últimos 12 meses, muchos de forma reiterada.</p>
                 </div>
                 <div className="rounded-md bg-primary-container p-5">
                   <div className="flex items-baseline justify-between gap-2">
                     <span className="font-display text-4xl font-bold whitespace-nowrap text-amber">US$ 530M</span>
-                    <span className="text-[11px] font-bold uppercase tracking-[0.08em] text-white/60">Pérdidas anuales</span>
+                    <span className="text-[11px] font-bold uppercase tracking-[0.08em] text-white/60">SNA · Pérdidas anuales</span>
                   </div>
                   <p className="mt-1 font-bold uppercase">Pérdidas por robo en el agro</p>
-                  <p className="text-sm text-white/70">Maquinaria, bombas, cables y equipos eléctricos.</p>
+                  <p className="text-sm text-white/70">Insumos, instalaciones eléctricas, maquinaria y animales.</p>
                 </div>
                 <div className="rounded-md bg-primary-container p-5">
                   <span className="text-[11px] font-bold uppercase tracking-[0.08em] text-amber">Principal foco de robo</span>
