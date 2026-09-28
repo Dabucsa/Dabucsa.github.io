@@ -10,4 +10,3 @@ export function waHref(text?: string) {
 
 export const WA_DEFAULT = "Hola ROMATSA, quisiera solicitar una cotización";
 
-export const WA_URGENCIA = "Hola ROMATSA, tengo una falla en maquinaria y necesito reparación en terreno. Equipo: ";
