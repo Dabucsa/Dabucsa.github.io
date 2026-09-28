@@ -12,7 +12,6 @@ import {
   MapPin,
   MessageCircle,
   Phone,
-  ReceiptText,
   Send,
   Shield,
   ShieldCheck,
@@ -372,10 +371,6 @@ export default function Home() {
                 <Phone className="size-5" />
                 {PHONE_DISPLAY}
               </a>
-            </div>
-            <div className="mt-6 flex items-center justify-center gap-2 rounded-md bg-surface-low px-4 py-3 text-[11px] font-bold uppercase tracking-[0.08em]">
-              <ReceiptText className="size-4 shrink-0" />
-              Emitimos factura electrónica
             </div>
           </div>
         </section>
