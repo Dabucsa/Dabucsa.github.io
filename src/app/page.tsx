@@ -1,5 +1,6 @@
 import Image from "next/image";
 import {
+  Camera,
   CircleHelp,
   ClipboardCheck,
   CloudHail,
@@ -21,10 +22,11 @@ import {
   Wrench,
 } from "lucide-react";
 import Cotizador from "@/components/Cotizador";
-import { PHONE_DISPLAY, TEL_HREF, WA_DEFAULT, waHref } from "@/lib/site";
+import { PHONE_DISPLAY, TEL_HREF, WA_DEFAULT, WA_URGENCIA, waHref } from "@/lib/site";
 
 const NAV = [
   { href: "#servicios", label: "Servicios" },
+  { href: "#urgencias", label: "Urgencias" },
   { href: "#antirrobo", label: "Antirrobo" },
   { href: "#proyectos", label: "Proyectos" },
   { href: "#cobertura", label: "Cobertura" },
@@ -109,7 +111,7 @@ function Logo({ light = false }: { light?: boolean }) {
       </svg>
       <span className="flex flex-col leading-none">
         <span className={`font-display text-2xl font-extrabold tracking-[0.06em] ${light ? "text-white" : "text-primary-container"}`}>ROMATSA</span>
-        <span className="font-display text-[12px] font-bold uppercase tracking-[0.08em] text-[#F59E0B]">Maestranza en terreno</span>
+        <span className="font-display text-[12px] font-bold whitespace-nowrap uppercase tracking-[0.08em] text-[#F59E0B]">Maestranza en terreno</span>
       </span>
     </a>
   );
@@ -122,7 +124,7 @@ export default function Home() {
       <header id="top" className="sticky top-0 z-40 bg-primary-container shadow-md">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4">
           <Logo light />
-          <nav className="hidden items-center gap-7 md:flex">
+          <nav className="hidden items-center gap-6 lg:flex">
             {NAV.map((n) => (
               <a key={n.href} href={n.href} className="text-sm font-semibold uppercase tracking-wider text-white/80 transition hover:text-amber">
                 {n.label}
@@ -186,6 +188,36 @@ export default function Home() {
               <p className="text-sm text-ink-soft">
                 <span className="font-bold text-ink">Cobertura:</span> San Carlos, Chillán, Linares, Parral, Los Ángeles y sectores rurales aledaños.
               </p>
+            </div>
+          </div>
+        </section>
+
+        {/* URGENCIAS */}
+        <section id="urgencias" className="px-4 pb-10">
+          <div className="mx-auto grid max-w-6xl gap-6 rounded-lg border-l-8 border-amber bg-white p-6 shadow-md md:p-8 lg:grid-cols-[1.4fr_1fr] lg:items-center">
+            <div>
+              <span className="eyebrow">
+                <Wrench className="size-3.5" />
+                Reparaciones en terreno
+              </span>
+              <h2 className="h-section mt-2">¿Maquinaria detenida en plena temporada?</h2>
+              <p className="mt-3 text-lg text-ink-soft">
+                Reparamos colosos, rastras, arados, tolvas y brazos hidráulicos directamente en tu predio, para que la faena no se detenga.
+              </p>
+              <p className="mt-4 flex items-center gap-2 text-sm font-semibold text-ink">
+                <Camera className="size-4 shrink-0 text-amber-dark" />
+                Envíanos una foto de la falla y la ubicación: evaluamos y coordinamos la salida.
+              </p>
+            </div>
+            <div className="grid gap-3">
+              <a href={waHref(WA_URGENCIA)} target="_blank" rel="noopener noreferrer" className="btn bg-whatsapp text-white hover:brightness-110">
+                <MessageCircle className="size-5" />
+                Reportar una falla
+              </a>
+              <a href={TEL_HREF} className="btn bg-primary text-white hover:bg-primary-container">
+                <Phone className="size-5" />
+                {PHONE_DISPLAY}
+              </a>
             </div>
           </div>
         </section>
