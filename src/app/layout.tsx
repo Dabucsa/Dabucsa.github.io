@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   title: "ROMATSA · Maestranza en Terreno — Ñuble, Maule y Biobío",
   description:
     "Estructuras, galpones, techumbres para cerezos, jaulas antirrobo, portones y reparaciones pesadas. Taller móvil autónomo que va a tu faena en Ñuble, Maule y Biobío.",
-  icons: { icon: "/img/logo-compacto.svg" },
+  icons: { icon: "/img/favicon.svg" },
   openGraph: {
     title: "ROMATSA · Maestranza en Terreno",
     description: "Soluciones en metal, hechas en tu faena. Ñuble, Maule y Biobío.",

@@ -100,10 +100,16 @@ const COBERTURA = [
 function Logo({ light = false }: { light?: boolean }) {
   return (
     <a href="#top" className="flex items-center gap-3" aria-label="ROMATSA — inicio">
-      <span className="flex size-10 items-center justify-center rounded-md bg-amber font-display text-2xl font-extrabold text-primary">R</span>
+      <svg viewBox="0 0 44 44" className="size-10 shrink-0 rounded-lg ring-1 ring-white/20" aria-hidden="true">
+        <rect width="44" height="44" rx="8" fill="#162B45" />
+        <path d="M12 10 L25 10 C30 10 33 13 33 17 C33 21 30 24 25 24 L18 24 L18 34 L12 34 Z" fill="#FFFFFF" />
+        <path d="M18 16 L24 16 C26 16 27 17 27 18.5 C27 20 26 21 24 21 L18 21 Z" fill="#162B45" />
+        <path d="M23 23 L32 34 L26 34 L18 25 Z" fill="#D97706" />
+        <polygon points="34,8 37,2 40,8 37,14" fill="#F59E0B" />
+      </svg>
       <span className="flex flex-col leading-none">
-        <span className={`font-display text-2xl font-extrabold tracking-wide ${light ? "text-white" : "text-primary"}`}>ROMATSA</span>
-        <span className="text-[11px] font-bold uppercase tracking-[0.08em] text-on-primary-container">Maestranza en terreno</span>
+        <span className={`font-display text-2xl font-extrabold tracking-[0.06em] ${light ? "text-white" : "text-primary-container"}`}>ROMATSA</span>
+        <span className="font-display text-[12px] font-bold uppercase tracking-[0.08em] text-[#F59E0B]">Maestranza en terreno</span>
       </span>
     </a>
   );
