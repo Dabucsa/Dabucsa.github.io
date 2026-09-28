@@ -15,6 +15,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://dabucsa.github.io"),
   title: "ROMATSA · Maestranza en Terreno — Ñuble, Maule y Biobío",
   description:
     "Estructuras, galpones, techumbres para cerezos, jaulas antirrobo, portones y reparaciones pesadas. Taller móvil autónomo que va a tu faena en Ñuble, Maule y Biobío.",
