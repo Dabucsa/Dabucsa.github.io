@@ -12,25 +12,25 @@ export default function Cotizador() {
     e.preventDefault();
     const f = new FormData(e.currentTarget);
     const text =
-      `Hola ROMATSA Maestranza:\n\n` +
+      `Hola ROMATSA:\n\n` +
       `Nombre / Predio: ${String(f.get("nombre")).trim()}\n` +
       `Ubicación: ${String(f.get("ubicacion")).trim()}\n` +
       `Requerimiento: ${String(f.get("trabajo")).trim()}\n\n` +
-      `Solicito presupuesto o visita técnica a terreno.`;
+      `Quisiera solicitar una cotización o visita técnica.`;
     window.open(waHref(text), "_blank", "noopener,noreferrer");
   }
 
   return (
     <section id="cotizador" className="px-4 py-12 md:py-20">
       <div className="mx-auto max-w-3xl rounded-lg border border-outline/60 bg-white p-6 shadow-sm md:p-10">
-        <span className="eyebrow">Contacto ágil</span>
-        <h2 className="h-section mt-2">¿Tienes algo en mente que no está en la lista?</h2>
-        <p className="mt-2 text-ink-soft">Envíanos lo que tengas disponible para presupuestar hoy mismo:</p>
+        <span className="eyebrow">Cotización</span>
+        <h2 className="h-section mt-2">Solicita tu cotización</h2>
+        <p className="mt-2 text-ink-soft">Envíanos una foto, un croquis o la descripción de lo que necesitas. Te respondemos a la brevedad.</p>
 
         <div className="mt-6 grid grid-cols-3 gap-3">
           {[
             { icon: Camera, label: "1. Una foto" },
-            { icon: PencilRuler, label: "2. Un dibujo" },
+            { icon: PencilRuler, label: "2. Un croquis" },
             { icon: Lightbulb, label: "3. Tu idea" },
           ].map(({ icon: Icon, label }) => (
             <div key={label} className="flex flex-col items-center gap-2 rounded-md bg-surface-low px-2 py-4 text-center">
@@ -42,20 +42,20 @@ export default function Cotizador() {
 
         <form onSubmit={handleSubmit} className="mt-6 space-y-4">
           <div>
-            <label htmlFor="nombre" className={labelCls}>Nombre del fundo o faena</label>
+            <label htmlFor="nombre" className={labelCls}>Nombre o predio</label>
             <input id="nombre" name="nombre" required className={inputCls} placeholder="Ej: Agrícola Las Acacias / Don Carlos" />
           </div>
           <div>
-            <label htmlFor="ubicacion" className={labelCls}>Comuna o sector (Ñuble, Maule o Biobío)</label>
+            <label htmlFor="ubicacion" className={labelCls}>Comuna o sector</label>
             <input id="ubicacion" name="ubicacion" required className={inputCls} placeholder="Ej: San Carlos camino a Ninhue / Parral" />
           </div>
           <div>
-            <label htmlFor="trabajo" className={labelCls}>¿Qué necesitas resolver o fabricar?</label>
-            <textarea id="trabajo" name="trabajo" required rows={3} className={inputCls} placeholder="Ej: Jaula para bomba de 15HP y portón corredera de 6 metros" />
+            <label htmlFor="trabajo" className={labelCls}>Descripción del requerimiento</label>
+            <textarea id="trabajo" name="trabajo" required rows={3} className={inputCls} placeholder="Ej: Jaula de protección para bomba y portón corredera de 6 m" />
           </div>
           <button type="submit" className="btn w-full bg-whatsapp text-white hover:brightness-110">
             <MessageCircle className="size-5" />
-            Enviar directo a WhatsApp
+            Enviar por WhatsApp
           </button>
         </form>
       </div>

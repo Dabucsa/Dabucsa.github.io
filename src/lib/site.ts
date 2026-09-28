@@ -8,4 +8,4 @@ export function waHref(text?: string) {
     : `https://wa.me/${PHONE}`;
 }
 
-export const WA_DEFAULT = "Hola ROMATSA, necesito cotizar un trabajo de maestranza en terreno";
+export const WA_DEFAULT = "Hola ROMATSA, quisiera solicitar una cotización";

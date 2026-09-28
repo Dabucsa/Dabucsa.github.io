@@ -1,6 +1,7 @@
 import Image from "next/image";
 import {
   CircleHelp,
+  ClipboardCheck,
   CloudHail,
   Droplets,
   Factory,
@@ -16,6 +17,7 @@ import {
   Shield,
   ShieldCheck,
   Truck,
+  Users,
   Warehouse,
   Wrench,
 } from "lucide-react";
@@ -25,7 +27,7 @@ import { PHONE_DISPLAY, TEL_HREF, WA_DEFAULT, waHref } from "@/lib/site";
 const NAV = [
   { href: "#servicios", label: "Servicios" },
   { href: "#antirrobo", label: "Antirrobo" },
-  { href: "#trabajos", label: "Trabajos" },
+  { href: "#proyectos", label: "Proyectos" },
   { href: "#cobertura", label: "Cobertura" },
 ];
 
@@ -34,60 +36,66 @@ const SERVICIOS = [
     icon: CloudHail,
     title: "Techumbres para cerezos",
     tag: "Protección",
-    text: "Estructuras modulares antilluvia y antigranizo calculadas para soportar vientos y peso hídrico. Montaje limpio sin quebrar ramas ni afectar hileras productivas.",
+    text: "Estructuras de soporte para cubiertas antilluvia y antigranizo, diseñadas para resistir viento y carga de agua. Montaje planificado para no intervenir las hileras en producción.",
   },
   {
     icon: Shield,
     title: "Jaulas y blindaje antirrobo",
     tag: "Crítico",
     highlight: true,
-    text: "Protección perimetral pesada para bombas sumergibles, grupos generadores diésel, casetas y tableros con anclaje a poyos de hormigón reforzado.",
+    text: "Cierres de acero para bombas sumergibles, grupos electrógenos, casetas y tableros eléctricos, con anclaje a fundaciones de hormigón.",
   },
   {
     icon: Droplets,
     title: "Casetas de riego tecnificado",
     tag: "Riego",
-    text: "Perfilería con anticorrosivo epóxico, ventilación y sellos climáticos para proteger bombas, filtros y tableros de riego.",
+    text: "Casetas metálicas con tratamiento anticorrosivo, ventilación y sellos para proteger bombas, filtros y tableros de riego.",
   },
   {
     icon: Fence,
     title: "Portones y cierres de faena",
     tag: "Acceso",
-    text: "Portones de batiente y correderas de alto tonelaje aptos para camiones de cosecha, colosos dobles y cosechadoras.",
+    text: "Portones de batiente y correderas de alta resistencia, dimensionados para el paso de camiones, colosos y maquinaria de cosecha.",
   },
   {
     icon: Warehouse,
     title: "Galpones y cobertizos",
     tag: "Estructura",
-    text: "Bodegas de insumos, cobertizos para resguardo de tractores e implementos, y rampas metálicas de carga pesada.",
+    text: "Bodegas de insumos, cobertizos para maquinaria e implementos, y rampas metálicas de carga.",
   },
   {
     icon: Wrench,
-    title: "Reparación y soldadura en faena",
-    tag: "Urgencia",
-    text: "Colosos fisurados, rastras quebradas, arados desalineados, tolvas y brazos hidráulicos. Llegamos con taller móvil directo al potrero o callejón.",
+    title: "Reparación y soldadura en terreno",
+    tag: "En terreno",
+    text: "Reparación estructural de colosos, rastras, arados, tolvas y brazos hidráulicos directamente en el predio, para reducir los tiempos de detención.",
   },
 ];
 
 const PASOS = [
-  { title: "Nos cuentas o mandas foto", text: "WhatsApp directo: foto de la rotura, medidas aproximadas o croquis a mano alzada." },
-  { title: "Te damos precio cerrado", text: "Sin sorpresas ni cobros inventados a mitad del trabajo. Presupuesto transparente." },
-  { title: "Vamos con taller autónomo", text: "Camioneta equipada con generador, soldadora, gases, esmeriles y corte." },
-  { title: "Entrega y prueba en terreno", text: "Prueba in situ, limpieza de escoria y entrega con respaldo técnico." },
+  { title: "Levantamiento", text: "Nos envías fotos, medidas o un croquis. Si el proyecto lo requiere, coordinamos una visita técnica al predio." },
+  { title: "Cotización formal", text: "Presupuesto detallado con alcance, materiales y plazos definidos antes de iniciar el trabajo." },
+  { title: "Ejecución en terreno", text: "Fabricación y montaje en tu predio con equipamiento propio de generación, soldadura y corte." },
+  { title: "Entrega", text: "Revisión final en conjunto y entrega del trabajo terminado, con respaldo posterior." },
+];
+
+const RESPALDO = [
+  { icon: Users, title: "Equipo especializado", text: "Soldadores y montajistas con experiencia en estructuras y maquinaria agrícola." },
+  { icon: Truck, title: "Equipamiento autónomo", text: "Generación eléctrica, soldadura y corte propios: no dependemos de la energía disponible en el predio." },
+  { icon: ClipboardCheck, title: "Un responsable por proyecto", text: "Coordinación directa desde la cotización hasta la entrega, sin intermediarios." },
 ];
 
 // Imágenes referenciales generadas en Stitch — reemplazar por fotos reales de faenas.
 const TRABAJOS = [
-  { img: "/img/faena-1.jpg", tag: "Antirrobo", title: "Jaula antirrobo para bomba", text: "Estructura en ángulo 50x50x4 mm con candado blindado oculto y anclaje a zapata corrida." },
-  { img: "/img/faena-2.jpg", tag: "Accesos", title: "Portón camionero doble batiente", text: "Diseñado para camiones de fruta y tolvas de cereal sin vencer los pilares maestros." },
-  { img: "/img/faena-3.jpg", tag: "Galpones", title: "Galpón de resguardo para tractores", text: "Tijerales dobles y pilares tubulares arriostrados." },
-  { img: "/img/faena-4.jpg", tag: "Techumbres", title: "Techumbre y marcos para cerezos", text: "Refuerzos de cumbrera y anclajes con tirantes de acero contra lluvias y heladas." },
+  { img: "/img/faena-1.jpg", tag: "Antirrobo", title: "Jaula antirrobo para bomba", text: "Estructura en perfil angular con cubrecandado blindado y anclaje a fundación." },
+  { img: "/img/faena-2.jpg", tag: "Accesos", title: "Portón doble batiente", text: "Dimensionado para el paso de camiones de fruta y tolvas." },
+  { img: "/img/faena-3.jpg", tag: "Galpones", title: "Galpón de resguardo para tractores", text: "Estructura con cerchas dobles y pilares tubulares arriostrados." },
+  { img: "/img/faena-4.jpg", tag: "Techumbres", title: "Techumbre y marcos para cerezos", text: "Estructura de soporte con anclajes y tensores para cubiertas antilluvia." },
 ];
 
 const COBERTURA = [
-  { region: "Región de Ñuble", comunas: "San Carlos (base), Chillán, Coihueco, Bulnes, San Nicolás, San Ignacio, Portezuelo, Ninhue y Quillón." },
+  { region: "Región de Ñuble", comunas: "San Carlos (base de operaciones), Chillán, Coihueco, Bulnes, San Nicolás, San Ignacio, Portezuelo, Ninhue y Quillón." },
   { region: "Región del Maule Sur", comunas: "Parral, Linares, Retiro, Longaví, Cauquenes, Villa Alegre y sectores rurales colindantes." },
-  { region: "Región del Biobío Norte", comunas: "Los Ángeles, Cabrero, Yumbel, Mulchén y faenas agrícolas y forestales cercanas." },
+  { region: "Región del Biobío Norte", comunas: "Los Ángeles, Cabrero, Yumbel, Mulchén y sectores agrícolas y forestales cercanos." },
 ];
 
 function Logo({ light = false }: { light?: boolean }) {
@@ -129,13 +137,13 @@ export default function Home() {
           <div className="lg:self-end">
             <div className="inline-flex items-center gap-2 rounded bg-surface-high px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.08em]">
               <span className="size-2 animate-pulse rounded-full bg-amber" />
-              Taller móvil en terreno · Maule · Ñuble · Biobío
+              Maestranza móvil · Ñuble · Maule · Biobío
             </div>
             <h1 className="mt-5 font-display text-[40px] leading-[42px] font-bold uppercase md:text-[60px] md:leading-[60px]">
               Soluciones en metal, <span className="text-amber-dark">hechas en tu faena.</span>
             </h1>
             <p className="mt-4 max-w-xl text-lg leading-relaxed text-ink-soft">
-              Estructuras, techumbres, protección antirrobo, portones y reparaciones pesadas. Vamos a tu faena con generador y soldadora autónoma: no tienes que mover nada.
+              Diseño, fabricación y montaje de estructuras metálicas para el sector agrícola. Trabajamos directamente en tu predio con equipamiento propio y autónomo.
             </p>
           </div>
 
@@ -151,7 +159,7 @@ export default function Home() {
             <div className="flex items-center justify-between gap-3 bg-primary-container px-4 py-3">
               <span className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.08em] text-white">
                 <Factory className="size-4 shrink-0 text-amber" />
-                Estructuras y montaje en faena · Acero estructural
+                Estructuras y montaje en terreno
               </span>
               <span className="shrink-0 text-[11px] font-bold uppercase tracking-[0.08em] text-amber">100% autónomo</span>
             </div>
@@ -161,7 +169,7 @@ export default function Home() {
             <div className="grid gap-3 sm:grid-cols-2">
               <a href="#cotizador" className="btn bg-amber text-primary shadow-sm hover:brightness-105">
                 <Send className="size-5" />
-                Cuéntanos tu proyecto
+                Solicitar cotización
               </a>
               <a href="#servicios" className="btn bg-surface-high text-primary hover:bg-surface-mid">
                 <Hammer className="size-5" />
@@ -171,7 +179,7 @@ export default function Home() {
             <div className="mt-5 flex items-start gap-3 rounded-md bg-surface-low p-4">
               <Truck className="mt-0.5 size-5 shrink-0 text-primary-container" />
               <p className="text-sm text-ink-soft">
-                <span className="font-bold text-ink">Ruta diaria:</span> San Carlos, Chillán, Linares, Parral, Los Ángeles y comunas rurales aledañas.
+                <span className="font-bold text-ink">Cobertura:</span> San Carlos, Chillán, Linares, Parral, Los Ángeles y sectores rurales aledaños.
               </p>
             </div>
           </div>
@@ -184,18 +192,18 @@ export default function Home() {
               <div>
                 <span className="eyebrow text-amber">
                   <Lock className="size-3.5" />
-                  Seguridad crítica rural
+                  Seguridad de equipos
                 </span>
-                <h2 className="h-section mt-2">Protegemos tus equipos donde están.</h2>
+                <h2 className="h-section mt-2">Protección para los equipos críticos de tu predio.</h2>
                 <p className="mt-3 text-lg text-white/80">
-                  Cercar una faena completa cuesta millones. Proteger el generador, la bomba o el tablero cuesta una fracción, y es lo que realmente se llevan.
+                  Cercar un predio completo es costoso. Proteger los equipos de mayor valor —bombas, generadores y tableros eléctricos— es una inversión acotada que apunta directamente al principal foco de robo.
                 </p>
                 <div className="mt-6 flex gap-4 rounded-md bg-white p-5 text-ink">
                   <ShieldCheck className="size-6 shrink-0 text-amber-dark" />
                   <div>
                     <span className="text-[11px] font-bold uppercase tracking-[0.08em]">Diseño de alta resistencia</span>
                     <p className="mt-1 text-sm text-ink-soft">
-                      Nuestras jaulas de acero estructural permiten ventilación natural y mantención rutinaria, con cubrecandados encapsulados que no se alcanzan con napoleón ni galletera.
+                      Jaulas de acero estructural que mantienen la ventilación y el acceso para mantención, con cubrecandados encapsulados que dificultan el corte con herramientas manuales o eléctricas.
                     </p>
                   </div>
                 </div>
@@ -211,19 +219,19 @@ export default function Home() {
                     <span className="font-display text-4xl font-bold whitespace-nowrap text-amber">79%</span>
                     <span className="text-[11px] font-bold uppercase tracking-[0.08em] text-white/60">Reporte SNA / Socabio</span>
                   </div>
-                  <p className="mt-1 font-bold uppercase">De los agricultores sufrió un delito</p>
-                  <p className="text-sm text-white/70">En el último período, en faenas rurales.</p>
+                  <p className="mt-1 font-bold uppercase">de los agricultores ha sido víctima de delitos</p>
+                  <p className="text-sm text-white/70">Robos y daños en predios agrícolas.</p>
                 </div>
                 <div className="rounded-md bg-primary-container p-5">
                   <div className="flex items-baseline justify-between gap-2">
                     <span className="font-display text-4xl font-bold whitespace-nowrap text-amber">US$ 530M</span>
                     <span className="text-[11px] font-bold uppercase tracking-[0.08em] text-white/60">Pérdidas anuales</span>
                   </div>
-                  <p className="mt-1 font-bold uppercase">Impacto directo por robo</p>
-                  <p className="text-sm text-white/70">Daño en maquinaria, bombas y cables en el agro nacional.</p>
+                  <p className="mt-1 font-bold uppercase">Pérdidas por robo en el agro</p>
+                  <p className="text-sm text-white/70">Maquinaria, bombas, cables y equipos eléctricos.</p>
                 </div>
                 <div className="rounded-md bg-primary-container p-5">
-                  <span className="text-[11px] font-bold uppercase tracking-[0.08em] text-amber">Foco crítico de robo</span>
+                  <span className="text-[11px] font-bold uppercase tracking-[0.08em] text-amber">Principal foco de robo</span>
                   <p className="mt-1 font-bold uppercase">Bombas, tableros y generadores</p>
                   <p className="text-sm text-white/70">Motores de pozo profundo, tableros trifásicos y bancos de inversores.</p>
                 </div>
@@ -236,11 +244,11 @@ export default function Home() {
         <section id="servicios" className="mx-auto max-w-6xl px-4 py-12 md:py-20">
           <span className="eyebrow">
             <HardHat className="size-3.5" />
-            Capacidades maestranza
+            Servicios
           </span>
-          <h2 className="h-section mt-2">Lo que hacemos en tu campo</h2>
+          <h2 className="h-section mt-2">Soluciones para el sector agrícola</h2>
           <p className="mt-2 max-w-2xl text-lg text-ink-soft">
-            Soldadura MIG y electrodo, perfiles pesados y pintura anticorrosiva de nivel industrial.
+            Soldadura MIG y por electrodo, perfilería estructural y terminaciones con pintura anticorrosiva industrial.
           </p>
           <div className="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {SERVICIOS.map((s, i) => (
@@ -270,63 +278,46 @@ export default function Home() {
 
         {/* PROCESO */}
         <section className="bg-surface-low px-4 py-12 md:py-20">
-          <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-2 lg:items-center">
-            <div>
-              <span className="eyebrow">Metodología simple</span>
-              <h2 className="h-section mt-2">Cómo trabajamos contigo</h2>
-              <ol className="mt-6 space-y-3">
-                {PASOS.map((p, i) => (
-                  <li key={p.title} className="flex gap-4 rounded-md bg-white p-4 shadow-sm">
-                    <span
-                      className={`flex size-11 shrink-0 items-center justify-center rounded font-display text-2xl font-bold ${
-                        i === 2 ? "bg-amber text-primary" : "bg-primary text-white"
-                      }`}
-                    >
-                      {i + 1}
-                    </span>
-                    <div>
-                      <span className="font-bold uppercase tracking-wide">{p.title}</span>
-                      <p className="text-ink-soft">{p.text}</p>
-                    </div>
-                  </li>
-                ))}
-              </ol>
-            </div>
-            <Image
-              src="/img/camioneta.jpg"
-              alt="Camioneta taller con soldadora, generador y perfiles de acero en camino rural"
-              width={1376}
-              height={768}
-              className="h-64 w-full rounded-lg object-cover shadow-lg md:h-full md:max-h-[480px]"
-            />
+          <div className="mx-auto max-w-6xl">
+            <span className="eyebrow">Cómo trabajamos</span>
+            <h2 className="h-section mt-2">Un proceso claro, de principio a fin</h2>
+            <ol className="mt-8 grid gap-3 md:grid-cols-2 lg:grid-cols-4">
+              {PASOS.map((p, i) => (
+                <li key={p.title} className="rounded-md bg-white p-5 shadow-sm">
+                  <span className="flex size-11 items-center justify-center rounded bg-primary font-display text-2xl font-bold text-white">
+                    {i + 1}
+                  </span>
+                  <h3 className="mt-4 font-display text-xl font-bold uppercase">{p.title}</h3>
+                  <p className="mt-1 text-ink-soft">{p.text}</p>
+                </li>
+              ))}
+            </ol>
           </div>
         </section>
 
         <Cotizador />
 
-        {/* OFICIO */}
-        <section className="bg-surface-high px-4 py-12">
-          <div className="mx-auto max-w-3xl">
-            <div className="flex items-center gap-4">
-              <span className="flex size-14 shrink-0 items-center justify-center rounded bg-primary-container">
-                <HardHat className="size-7 text-amber" />
-              </span>
-              <div>
-                <span className="eyebrow">Oficio y garantía</span>
-                <h3 className="font-display text-2xl font-bold uppercase md:text-3xl">Trato directo con el maestro</h3>
-              </div>
+        {/* RESPALDO */}
+        <section className="bg-primary-container px-4 py-12 text-white md:py-20">
+          <div className="mx-auto max-w-6xl">
+            <span className="eyebrow text-amber">Por qué ROMATSA</span>
+            <h2 className="h-section mt-2">Respaldo profesional en cada proyecto</h2>
+            <div className="mt-8 grid gap-4 md:grid-cols-3">
+              {RESPALDO.map((r) => (
+                <div key={r.title} className="rounded-md bg-primary p-6">
+                  <r.icon className="size-7 text-amber" />
+                  <h3 className="mt-4 font-display text-xl font-bold uppercase">{r.title}</h3>
+                  <p className="mt-1 text-white/75">{r.text}</p>
+                </div>
+              ))}
             </div>
-            {/* TODO: confirmar años de experiencia con el cliente */}
-            <p className="mt-4 text-lg leading-relaxed text-ink-soft">
-              Más de 25 años en faenas agroindustriales y metalmecánica de campo. Sin intermediarios ni ejecutivos: hablas y coordinas directamente con quien calcula, corta, suelda y monta en tu faena.
-            </p>
           </div>
         </section>
 
         {/* TRABAJOS */}
-        <section id="trabajos" className="mx-auto max-w-6xl px-4 py-12 md:py-20">
-          <span className="eyebrow">Trabajos en terreno</span>
-          <h2 className="h-section mt-2">Lo que construimos</h2>
+        <section id="proyectos" className="mx-auto max-w-6xl px-4 py-12 md:py-20">
+          <span className="eyebrow">Proyectos</span>
+          <h2 className="h-section mt-2">Tipos de proyecto</h2>
           <div className="mt-8 grid gap-4 md:grid-cols-2">
             {TRABAJOS.map((t) => (
               <article key={t.title} className="overflow-hidden rounded-md bg-white shadow-sm">
@@ -348,8 +339,8 @@ export default function Home() {
         {/* COBERTURA */}
         <section id="cobertura" className="bg-surface-low px-4 py-12 md:py-20">
           <div className="mx-auto max-w-6xl">
-            <span className="eyebrow">Presencia operativa</span>
-            <h2 className="h-section mt-2">Cobertura diaria en tu zona</h2>
+            <span className="eyebrow">Zona de operación</span>
+            <h2 className="h-section mt-2">Cobertura regional</h2>
             <div className="mt-8 grid gap-3 md:grid-cols-3">
               {COBERTURA.map((c) => (
                 <div key={c.region} className="flex gap-3 rounded-md bg-white p-5 shadow-sm">
@@ -368,9 +359,9 @@ export default function Home() {
         <section className="px-4 py-14 text-center md:py-20">
           <div className="mx-auto max-w-2xl">
             <CircleHelp className="mx-auto size-9 text-amber-dark" />
-            <h2 className="h-section mt-3">¿Qué necesitas resolver en tu campo hoy?</h2>
+            <h2 className="h-section mt-3">¿Tienes un proyecto en mente?</h2>
             <p className="mt-3 text-lg text-ink-soft">
-              Llámanos o escríbenos directamente. Vamos a tu faena a medir y te entregamos la solución más firme y económica.
+              Escríbenos o llámanos. Evaluamos tu requerimiento y coordinamos una visita técnica a tu predio.
             </p>
             <div className="mt-8 grid gap-3 sm:grid-cols-2">
               <a href={waHref(WA_DEFAULT)} target="_blank" rel="noopener noreferrer" className="btn bg-whatsapp text-white hover:brightness-110">
@@ -399,7 +390,7 @@ export default function Home() {
             <p>
               <a href={TEL_HREF} className="hover:text-amber">{PHONE_DISPLAY}</a>
             </p>
-            <p className="mt-1 text-white/50">Soldadura estructural · Carpintería metálica rural · Taller autónomo</p>
+            <p className="mt-1 text-white/50">Estructuras metálicas · Maestranza agrícola · Servicio en terreno</p>
           </div>
         </div>
       </footer>
