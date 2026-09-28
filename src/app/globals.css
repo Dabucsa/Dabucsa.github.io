@@ -1,0 +1,44 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #00162f;
+  --color-primary-container: #162b45;
+  --color-on-primary-container: #7f93b2;
+  --color-amber: #fdc425;
+  --color-amber-dark: #785a00;
+  --color-surface: #f8f9ff;
+  --color-surface-low: #eff4ff;
+  --color-surface-mid: #e5eeff;
+  --color-surface-high: #dce9ff;
+  --color-ink: #0b1c30;
+  --color-ink-soft: #44474d;
+  --color-outline: #c4c6ce;
+  --color-whatsapp: #1a9e4e;
+
+  --font-display: var(--font-barlow), "Barlow Condensed", sans-serif;
+  --font-sans: var(--font-inter), "Inter", system-ui, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+}
+
+body {
+  background: var(--color-surface);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-tap-highlight-color: transparent;
+}
+
+@layer components {
+  .eyebrow {
+    @apply inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.08em] text-amber-dark;
+  }
+  .h-section {
+    @apply font-display text-[28px] leading-[32px] font-bold uppercase md:text-[40px] md:leading-[44px];
+  }
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-md px-6 py-4 font-display text-lg font-bold uppercase tracking-wide transition active:scale-[0.98];
+  }
+}
